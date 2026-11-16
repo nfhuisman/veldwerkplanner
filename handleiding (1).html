@@ -1,0 +1,141 @@
+<!doctype html>
+<html lang="nl">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Handleiding Veldwerkplanner</title>
+<style>
+:root{--paper:#EEEFE3;--card:#F8F9F1;--ink:#20281F;--soft:#565F51;--moss:#374F33;--line:#CBCFBC;--amber:#8A6A1E;--amber-soft:#F1E8CE;--rust:#A5461F;}
+@media (prefers-color-scheme: dark){:root{--paper:#181B15;--card:#20241C;--ink:#E7E9DD;--soft:#A7AC9A;--moss:#B6D2AD;--line:#3A3F31;--amber:#D9BD6E;--amber-soft:#332A16;--rust:#E08A5E;}}
+*{box-sizing:border-box}
+body{margin:0;background:var(--paper);color:var(--ink);font:16px/1.6 system-ui,-apple-system,"Segoe UI",Arial,sans-serif}
+main{max-width:46rem;margin:0 auto;padding:2rem 1rem 4rem}
+h1{font:600 1.7rem/1.25 Georgia,"Times New Roman",serif;color:var(--moss);margin:0 0 .4rem}
+h2{font:600 1.2rem/1.3 Georgia,"Times New Roman",serif;color:var(--moss);margin:2.2rem 0 .5rem;padding-top:1rem;border-top:1px solid var(--line)}
+h3{font-size:1rem;margin:1.3rem 0 .3rem}
+p{margin:.5rem 0}
+ul,ol{margin:.4rem 0;padding-left:1.3rem}
+li{margin:.25rem 0}
+a{color:var(--moss)}
+.lead{color:var(--soft)}
+.note{background:var(--amber-soft);border:1px solid var(--amber);border-radius:8px;padding:.7rem .9rem;margin:1rem 0}
+.toc{background:var(--card);border:1px solid var(--line);border-radius:8px;padding:.8rem 1rem;margin:1.2rem 0}
+.toc ol{margin:.2rem 0}
+.step{display:inline-flex;align-items:center;justify-content:center;width:1.6rem;height:1.6rem;border-radius:50%;background:var(--moss);color:var(--paper);font-size:.85rem;font-weight:600;margin-right:.4rem}
+table{border-collapse:collapse;width:100%;font-size:.92rem;margin:.6rem 0}
+th,td{border-bottom:1px solid var(--line);padding:.4rem .5rem;text-align:left;vertical-align:top}
+th{color:var(--soft);font-weight:600}
+.back{display:inline-block;margin-bottom:1rem;font-size:.9rem}
+</style>
+</head>
+<body>
+<main>
+<a class="back" href="./">← Terug naar de Veldwerkplanner</a>
+<h1>Handleiding Veldwerkplanner</h1>
+<p class="lead">De Veldwerkplanner rekent uit wanneer de veldbezoeken voor soortenonderzoek moeten plaatsvinden en hoe je ze kunt combineren. Je kiest per project de soorten en functies; de planner haalt de periodes, het aantal bezoeken en de voorwaarden uit de protocollen. Lezen kost ongeveer tien minuten.</p>
+
+<div class="note"><strong>Hulpmiddel, geen vervanging van het protocol.</strong> De bibliotheek is samengesteld uit de BIJ12-kennisdocumenten, het Vleermuisprotocol 2021 en de soortinventarisatieprotocollen van Netwerk Groene Bureaus. Fouten of verouderde waarden zijn niet uit te sluiten. Controleer bij elk project de waarden aan de hand van de bron; de ecoloog blijft zelf verantwoordelijk.</div>
+
+<div class="toc"><strong>Inhoud</strong>
+<ol>
+<li><a href="#kort">In het kort</a></li>
+<li><a href="#project">Stap 1: Project</a></li>
+<li><a href="#soorten">Stap 2: Soorten en functies</a></li>
+<li><a href="#tijdlijn">Stap 3: Tijdlijn en voortgang</a></li>
+<li><a href="#plan">Stap 4: Veldbezoekplan en export</a></li>
+<li><a href="#bibliotheek">Bibliotheek</a></li>
+<li><a href="#opslag">Opslag en privacy</a></li>
+<li><a href="#fout">Fout gevonden?</a></li>
+</ol></div>
+
+<h2 id="kort">In het kort</h2>
+<p>Bovenaan de planner staat een balk met vier stappen. Je kunt op elke stap klikken en altijd terug.</p>
+<ol>
+<li><strong>Project</strong>: geef het project een naam en eventueel een deadline.</li>
+<li><strong>Soorten en functies</strong>: vink aan wat onderzocht moet worden.</li>
+<li><strong>Tijdlijn en voortgang</strong>: bekijk per functie het venster en houd bij welke bezoeken gepland of uitgevoerd zijn.</li>
+<li><strong>Veldbezoekplan en export</strong>: bekijk hoe de bezoeken gecombineerd kunnen worden en download de planning.</li>
+</ol>
+<p>Rechts in de balk staat de <strong>Bibliotheek</strong> met alle protocolgegevens.</p>
+
+<h2 id="project"><span class="step">1</span>Project</h2>
+<ul>
+<li>Kies <strong>Nieuw project</strong> en vul een naam en locatie in.</li>
+<li>De <strong>harde deadline</strong> is optioneel: de datum waarop het onderzoek klaar moet zijn, bijvoorbeeld voor een vergunningaanvraag. De planner waarschuwt als een functie daarvóór niet haalbaar is.</li>
+<li>Je kunt meerdere projecten bijhouden, een project dupliceren (zonder de voortgang), archiveren of verwijderen.</li>
+<li>Het <strong>projectenoverzicht</strong> zet alle projecten naast elkaar, met het aantal uitgevoerde bezoeken en eventuele risico's.</li>
+</ul>
+
+<h2 id="soorten"><span class="step">2</span>Soorten en functies</h2>
+<ul>
+<li>Klik een soortgroep open en daarna een soort. Vink alleen de functies aan die voor dit project onderzocht moeten worden. Een soort openklappen selecteert nog niets.</li>
+<li>Onder <strong>Jouw selectie</strong> zie je wat je hebt gekozen. Met het kruisje haal je een functie weg.</li>
+</ul>
+<h3>Meldingen bij het kiezen</h3>
+<table>
+<tr><th>Melding</th><th>Betekenis</th></tr>
+<tr><td>… zijn alternatieven voor elkaar</td><td>Deze functies onderzoeken hetzelfde met een andere methode of volgens een andere bron (bijvoorbeeld NGB tegenover BIJ12). Kies wat voor het project nodig is; meestal is dat één van de opties.</td></tr>
+<tr><td>… hoort altijd bij het onderzoek</td><td>Deze functie is bij deze soort altijd nodig, naast de methode die je hebt gekozen.</td></tr>
+<tr><td>… is alleen aanvullend bedoeld</td><td>Deze functie is geen zelfstandig onderzoek; kies er een hoofdmethode bij.</td></tr>
+</table>
+<h3>Algemene broedvogels</h3>
+<p>Met het vinkje <strong>Algemene broedvogels: broedseizoen tonen</strong> verschijnt het broedseizoen (15 maart t/m 15 juli) als aandachtsperiode in de tijdlijn, het veldbezoekplan en de export. Dit is geen onderzoeksprotocol en levert geen veldbezoeken op. Enkele soorten broeden eerder of later; de Vogelrichtlijn en de algemene zorgplicht gelden altijd.</p>
+
+<h2 id="tijdlijn"><span class="step">3</span>Tijdlijn en voortgang</h2>
+<p>Per functie zie je een balk over twee jaar met de streep van vandaag en, als je die hebt ingevuld, de deadline.</p>
+<table>
+<tr><th>Begrip</th><th>Betekenis</th></tr>
+<tr><td>Ideale periode</td><td>De periode die het protocol als optimaal noemt (donkere balk).</td></tr>
+<tr><td>Suboptimale periode</td><td>De ruimere periode die het protocol toestaat, vaak met extra voorwaarden of meer inspanning (lichte balk).</td></tr>
+<tr><td>Vast bezoekmoment</td><td>Een bezoek dat in een eigen periode moet vallen, bijvoorbeeld "één bezoek in juni".</td></tr>
+<tr><td>Tussenperiode</td><td>Het minimum aantal dagen tussen twee bezoeken van dezelfde functie.</td></tr>
+<tr><td>Let op</td><td>Extra regels uit de bron, zoals "minimaal 30 dagen tussen het eerste en het laatste bezoek" of "maximaal 21 dagen tussen opeenvolgende bezoeken".</td></tr>
+<tr><td>Weer</td><td>De weersomstandigheden uit het protocol (temperatuur, wind, neerslag). Controleer deze altijd vlak voor het bezoek.</td></tr>
+</table>
+<h3>Status van een functie</h3>
+<ul>
+<li><strong>Venster nu open</strong>: je kunt nu bezoeken uitvoeren. Staat er "maar suboptimaal" bij, dan lukt het alleen nog in de suboptimale periode of met een verkorte tussenperiode.</li>
+<li><strong>Nog te plannen</strong>: het venster moet nog beginnen. Is het lopende seizoen niet meer haalbaar en is er nog niets uitgevoerd, dan schuift de functie door naar het volgende seizoen.</li>
+<li><strong>Let op — risico</strong>: de resterende bezoeken passen niet meer binnen het venster of vóór de deadline.</li>
+<li><strong>Compleet</strong>: alle bezoeken zijn uitgevoerd of vervallen.</li>
+</ul>
+<h3>Voortgang bijhouden</h3>
+<p>Klap bij een functie <strong>Bezoeken en voortgang</strong> open. Per bezoek kies je een status (nog te plannen, gepland, uitgevoerd, vervallen) en vul je als je wilt een datum, uitvoerder en notitie in. De planner rekent daarna opnieuw: een uitgevoerd bezoek telt niet meer mee en het volgende bezoek kan pas na de tussenperiode. Valt een datum buiten het venster of te dicht op een ander bezoek, dan zie je een waarschuwing.</p>
+
+<h2 id="plan"><span class="step">4</span>Veldbezoekplan en export</h2>
+<p>Het veldbezoekplan deelt alle nog openstaande bezoeken in zo min mogelijk veldbezoeken in. Het is een voorstel: jij bepaalt de uiteindelijke data.</p>
+<ul>
+<li>Per veldbezoek zie je de <strong>vroegste en de uiterste datum</strong> en welke functies je dan combineert.</li>
+<li>Bij <strong>Tussenperiode</strong> staat hoeveel dagen er minimaal na een eerder veldbezoek moeten zitten. Noemt de bron geen tussenperiode, dan spreidt de planner de bezoeken indicatief over de periode; dat staat er dan bij.</li>
+<li>De planner houdt rekening met vaste bezoekmomenten, het tijdstip op de dag, uitgevoerde en geplande bezoeken en de deadline.</li>
+<li>Met <strong>Markeer dit bezoek als</strong> zet je alle functies van een veldbezoek in één keer op gepland of uitgevoerd.</li>
+</ul>
+<h3>Instellingen</h3>
+<table>
+<tr><th>Instelling</th><th>Wat het doet</th></tr>
+<tr><td>Ook combineren tussen verschillende groepen</td><td>Standaard combineert de planner alleen binnen een groep (vleermuizen met vleermuizen, vogels met vogels). Met dit vinkje mag alles bij elkaar.</td></tr>
+<tr><td>Suboptimale periodes benutten</td><td>Standaard blijft de planner in de ideale periode waar dat haalbaar is. Met dit vinkje gebruikt hij ook de suboptimale periodes als dat veldbezoeken bespaart of het onderzoek nog dit seizoen mogelijk maakt.</td></tr>
+<tr><td>Maximale duur van een gecombineerd bezoek</td><td>Functies worden alleen gecombineerd als het hele bezoek binnen deze duur past.</td></tr>
+<tr><td>Plannen vanaf</td><td>Laat het plan op een latere datum beginnen, bijvoorbeeld als het project pas in maart start.</td></tr>
+</table>
+<h3>Exporteren</h3>
+<ul>
+<li><strong>Excel-planning</strong>: een planblad met gele invulkolommen voor je eigen data (de cel kleurt groen, oranje of rood), een weektijdlijn, de voorgestelde veldbezoeken, de voortgang per bezoek en een blad met bronnen en voorwaarden.</li>
+<li><strong>Printbare samenvatting</strong>: een los bestand dat je in de browser opent en afdrukt of als PDF bewaart.</li>
+</ul>
+
+<h2 id="bibliotheek">Bibliotheek</h2>
+<ul>
+<li>De bibliotheek bevat per soort de functies met periodes, aantal bezoeken, tijdstip, voorwaarden, bron en een link naar het brondocument.</li>
+<li>Je kunt een functie aanpassen of een eigen functie toevoegen. Dat komt in een eigen laag bovenop de standaardbibliotheek; de functie krijgt het label "aangepast" of "eigen".</li>
+<li>Bij een nieuwe versie van de standaardbibliotheek zie je een melding met wat er is gewijzigd. Je eigen aanpassingen blijven staan; je kunt ze per functie terugzetten naar de standaard.</li>
+</ul>
+
+<h2 id="opslag">Opslag en privacy</h2>
+<p>Alles wat je invult blijft in je eigen browser op dit apparaat staan. Er wordt niets verzonden. Wis je de browsergegevens of werk je op een ander apparaat, dan zijn je projecten daar niet beschikbaar. Download daarom regelmatig de Excel-planning of de printbare samenvatting.</p>
+
+<h2 id="fout">Fout gevonden?</h2>
+<p>Wijkt een waarde af van het protocol of werkt iets niet? Meld het via <a href="https://github.com/nfhuisman/veldwerkplanner/issues/new">GitHub</a> en noem de soort, de functie en de bron.</p>
+</main>
+</body>
+</html>
