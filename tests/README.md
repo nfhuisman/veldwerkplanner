@@ -42,6 +42,10 @@ geen functie twee keer in één veldbezoek en de opgegeven onverenigbare paren.
 
 - `run.mjs` — laadt de app, draait de gevallen, algemene controles, rapport.
 - `cases.mjs` — de testgevallen (naam in het Nederlands, regelnummer, invoer, verwachting met reden).
+- `tijdteksten.mjs` — overzicht van hoe de app élke tijdstiptekst uit de bibliotheek leest (venster op 21 juni
+  en 15 december, en of de tekst exact of alleen grof herkend wordt). Draai dit na het toevoegen van soorten:
+  `node tests/tijdteksten.mjs` (optioneel: `node tests/tijdteksten.mjs ander/index.html uitvoer.json`).
+  Let op regels met `LEEG` (venster zonder lengte) of `NIET` (niet herkend).
 
 ## Een geval toevoegen
 

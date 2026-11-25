@@ -112,7 +112,18 @@ export const cases = [
   slotCase('Tijdstip "tussen zonsondergang en middernacht" (4 functies in de bibliotheek)', 'tussen zonsondergang en middernacht', 0, JUN, JUN.ss, 1440),
   slotCase('Tijdstip "1 uur voor zonsondergang tot een half uur na zonsondergang"', SCHEMER, 0, JUN, JUN.ss - 60, JUN.ss + 30),
   slotCase('Tijdstip "0:00 - 2:00 uur" (nacht na de datum)', ZWERM, 2, JUN, 1440, 1440 + 120),
-  slotCase('Tijdstip "ochtend tot begin middag (10:00-14:00 uur)"', DAG1014, 0, JUN, 600, 840),
+  // Dagvensters liggen in het rekenkader van de app op de dag ná de avond van de datum (net als 'overdag'
+  // en de ochtendbezoeken in deze testset), dus 10:00 = 1440 + 600.
+  slotCase('Tijdstip "ochtend tot begin middag (10:00-14:00 uur)"', DAG1014, 0, JUN, 1440 + 600, 1440 + 840),
+  // Toegevoegd 25-11-2026: formuleringen uit bibliotheek v72
+  slotCase('Tijdstip "vanaf zonsondergang tot 3 uur en 45 minuten daarna"', "'s avonds, vanaf zonsondergang tot 3 uur en 45 minuten daarna", 0, JUN, JUN.ss, JUN.ss + 225),
+  slotCase('Tijdstip "direct vanaf zonsondergang, uiterlijk 120 minuten daarna"', 'direct vanaf zonsondergang, uiterlijk 120 minuten daarna', 0, JUN, JUN.ss, JUN.ss + 120),
+  slotCase('Tijdstip "tussen zonsondergang en zonsopgang (\'s nachts)"', "tussen zonsondergang en zonsopgang ('s nachts)", 0, DEC, DEC.ss, DEC.sr),
+  slotCase('Tijdstip "tussen 22:00 en 01:00 uur (of vanaf 0 min na zonsondergang)"', 'tussen 22:00 en 01:00 uur (of vanaf 0 min na zonsondergang)', 0, JUN, 22 * 60, 25 * 60),
+  slotCase('Tijdstip "vanaf 15 min na zonsondergang tot 60 min voor zonsopkomst (suboptimaal: …)" → ideale venster', 'vanaf 15 min na zonsondergang tot 60 min voor zonsopkomst (suboptimaal: tot 30 min voor zonsopkomst)', 2, JUN, JUN.ss + 15, JUN.sr - 60),
+  compatCase('"overdag (ochtend of namiddag)" is overdag: combineerbaar met 10:00 tot 17:00, niet met een nachtbezoek', 3,
+    [{ tijdstip: 'overdag (ochtend of namiddag)', duur: 0 }, { tijdstip: '10:00 tot 17:00', duur: 0 }, { tijdstip: NACHT, duur: 2 }],
+    [[0, 1], [0, 2]], [true, false], '2027-06-15', 'het eerstgenoemde dagdeel (overdag) telt'),
   slotCase('Tijdstip alleen-ochtend vleermuis: "eindtijd 60 min voor zonsopkomst" (2 uur)', OCHTEND, 2, JUN, JUN.sr - 180, JUN.sr - 60),
   {
     type: 'unit', regel: 3, naam: 'Tijdstip "overdag" valt tussen zonsopkomst en zonsondergang',
@@ -318,10 +329,14 @@ export const cases = [
     check: all(count(5, '5 bezoeken, één functie'), r => within(r, L.bkZomer, '2027-07-01', '2027-09-15', 6))
   },
   {
-    type: 'plan', regel: 6, naam: 'Gewone dwergvleermuis kraam + zomerverblijf + gierzwaluw (klein), alles combineren → 2',
-    verwacht: '2 veldbezoeken (half juni en begin juli) met kraam 1× in juni, zomer 1× in 15-05…15-07, gierzwaluw 1× in 1–15 juli',
+    // Bijgewerkt 25-11-2026 na bibliotheek v72: zomerverblijfplaats heeft nu 1 verplicht ochtendbezoek
+    // (deelbezoek 15-05…15-07, "ochtend: tot 0 min voor zonsopkomst"). Dat kan niet samen met het
+    // schemerbezoek van de gierzwaluw, dus is er één veldbezoek meer nodig dan in de oude data (was 2).
+    type: 'plan', regel: 6, naam: 'Gewone dwergvleermuis kraam + zomerverblijf + gierzwaluw (klein), alles combineren → 3',
+    verwacht: '3 veldbezoeken: 2 avondbezoeken met gierzwaluw (1× in 1–15 juli) + 1 ochtendbezoek zomerverblijf; kraam 1× in juni',
     scenario: scen({ lib: [L.kraam, L.zomer, L.gzKlein], combiAlles: true }),
-    check: count(2, 'elk 2 bezoeken; schemer (−60…+30 min) + 2 uur vleermuis vanaf zonsondergang = 3 uur ≤ 4 uur')
+    check: all(count(3, '2× gierzwaluw (schemer) + 1 verplicht ochtendbezoek zomerverblijf dat niet met schemer kan'),
+      r => of(r, L.gzKlein).length === 2 ? [] : [{ regel: 6, msg: `gierzwaluw: verwacht in 2 veldbezoeken, app ${of(r, L.gzKlein).length}` }])
   },
   {
     type: 'plan', regel: 1, naam: 'Zelfde set zonder "combineren tussen groepen" → 2 (vleermuizen) + 2 (vogels) = 4',
