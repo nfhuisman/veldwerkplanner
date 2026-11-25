@@ -32,9 +32,9 @@ th{color:var(--soft);font-weight:600}
 <main>
 <a class="back" href="./">← Terug naar de Veldwerkplanner</a>
 <h1>Handleiding Veldwerkplanner</h1>
-<p class="lead">De Veldwerkplanner rekent uit wanneer de veldbezoeken voor soortenonderzoek moeten plaatsvinden en hoe je ze kunt combineren. Je kiest per project de soorten en functies; de planner haalt de periodes, het aantal bezoeken en de voorwaarden uit de protocollen. Lezen kost ongeveer tien minuten.</p>
+<p class="lead">De Veldwerkplanner rekent uit wanneer de veldbezoeken voor soortenonderzoek moeten plaatsvinden en hoe je ze kunt combineren. Je kiest per project de soorten en functies; de planner haalt de periodes, het aantal bezoeken en de voorwaarden uit de protocollen. Lezen kost ongeveer een kwartier.</p>
 
-<div class="note"><strong>Hulpmiddel, geen vervanging van het protocol.</strong> De bibliotheek is samengesteld uit de BIJ12-kennisdocumenten, het Vleermuisprotocol 2021 en de soortinventarisatieprotocollen van Netwerk Groene Bureaus. Fouten of verouderde waarden zijn niet uit te sluiten. Controleer bij elk project de waarden aan de hand van de bron; de ecoloog blijft zelf verantwoordelijk.</div>
+<div class="note"><strong>Hulpmiddel, geen vervanging van het protocol.</strong> De bibliotheek is samengesteld uit de BIJ12-kennisdocumenten, het Vleermuisprotocol 2021, de soortinventarisatieprotocollen van Netwerk Groene Bureaus, de provinciale omgevingsverordeningen en beleidsregels, en de methodieken van de soortorganisaties (RAVON, Sovon, FLORON, De Vlinderstichting, Zodion, EIS, BLWG). Fouten of verouderde waarden zijn niet uit te sluiten. Controleer bij elk project de waarden aan de hand van de bron; de ecoloog blijft zelf verantwoordelijk.</div>
 
 <div class="toc"><strong>Inhoud</strong>
 <ol>
@@ -43,7 +43,7 @@ th{color:var(--soft);font-weight:600}
 <li><a href="#soorten">Stap 2: Soorten en functies</a></li>
 <li><a href="#tijdlijn">Stap 3: Tijdlijn en voortgang</a></li>
 <li><a href="#plan">Stap 4: Veldbezoekplan en export</a></li>
-<li><a href="#bibliotheek">Bibliotheek</a></li>
+<li><a href="#bibliotheek">Bibliotheek en bronnen</a></li>
 <li><a href="#opslag">Opslag en privacy</a></li>
 <li><a href="#fout">Fout gevonden?</a></li>
 </ol></div>
@@ -51,16 +51,18 @@ th{color:var(--soft);font-weight:600}
 <h2 id="kort">In het kort</h2>
 <p>Bovenaan de planner staat een balk met vier stappen. Je kunt op elke stap klikken en altijd terug.</p>
 <ol>
-<li><strong>Project</strong>: geef het project een naam en eventueel een deadline.</li>
+<li><strong>Project</strong>: geef het project een naam, de provincie en eventueel een startdatum en deadline.</li>
 <li><strong>Soorten en functies</strong>: vink aan wat onderzocht moet worden.</li>
 <li><strong>Tijdlijn en voortgang</strong>: bekijk per functie het venster en houd bij welke bezoeken gepland of uitgevoerd zijn.</li>
 <li><strong>Veldbezoekplan en export</strong>: bekijk hoe de bezoeken gecombineerd kunnen worden en download de planning.</li>
 </ol>
-<p>Rechts in de balk staat de <strong>Bibliotheek</strong> met alle protocolgegevens.</p>
+<p>Rechts in de balk staan de <strong>Bibliotheek</strong> met alle protocolgegevens en deze handleiding.</p>
 
 <h2 id="project"><span class="step">1</span>Project</h2>
 <ul>
 <li>Kies <strong>Nieuw project</strong> en vul een naam en locatie in.</li>
+<li>Kies de <strong>provincie (bevoegd gezag)</strong>. Die bepaalt welke provinciale vrijstellingen, provinciale onderzoekseisen en welke lijst met jaarrond beschermde nesten in stap 2 worden getoond. Zonder provincie zie je de landelijke situatie.</li>
+<li>De <strong>startdatum</strong> is optioneel: de planner plant bezoeken pas vanaf die datum, bijvoorbeeld als het project pas in maart begint. Leeg betekent vanaf vandaag.</li>
 <li>De <strong>harde deadline</strong> is optioneel: de datum waarop het onderzoek klaar moet zijn, bijvoorbeeld voor een vergunningaanvraag. De planner waarschuwt als een functie daarvóór niet haalbaar is.</li>
 <li>Je kunt meerdere projecten bijhouden, een project dupliceren (zonder de voortgang), archiveren of verwijderen.</li>
 <li>Het <strong>projectenoverzicht</strong> zet alle projecten naast elkaar, met het aantal uitgevoerde bezoeken en eventuele risico's.</li>
@@ -69,45 +71,65 @@ th{color:var(--soft);font-weight:600}
 <h2 id="soorten"><span class="step">2</span>Soorten en functies</h2>
 <ul>
 <li>Klik een soortgroep open en daarna een soort. Vink alleen de functies aan die voor dit project onderzocht moeten worden. Een soort openklappen selecteert nog niets.</li>
+<li>De soortgroepen zijn: vleermuizen, grondgebonden zoogdieren, vogels, reptielen, amfibieën, vissen, weekdieren, vlinders, libellen, kevers, planten en mossen, en overige.</li>
+<li><strong>Zeldzame soorten</strong> staan per groep ingeklapt onderaan. Kies ze alleen bij aanwijzingen of als het project binnen het verspreidingsgebied ligt.</li>
 <li>Onder <strong>Jouw selectie</strong> zie je wat je hebt gekozen. Met het kruisje haal je een functie weg.</li>
 </ul>
+<h3>Labels bij soorten en functies</h3>
+<table>
+<tr><th>Label</th><th>Betekenis</th></tr>
+<tr><td>vrijgesteld in …</td><td>De soort is in de gekozen provincie vrijgesteld bij ruimtelijke ontwikkeling en bestendig beheer en onderhoud. De zorgplicht blijft gelden.</td></tr>
+<tr><td>provinciaal: …</td><td>Een functie met de eigen eisen van die provincie. Ze verschijnt alleen als die provincie is gekozen en staat dan vóór de landelijke functie die ze vervangt.</td></tr>
+<tr><td>jaarrond beschermd nest</td><td>De vogelsoort staat op de nestlijst van het bevoegd gezag (met de categorie). Bovenaan de groep Vogels staat de volledige lijst van de gekozen provincie.</td></tr>
+<tr><td>indicatief</td><td>Er is geen geldend onderzoeksprotocol; de functie is opgebouwd uit de beste beschikbare bron (zie onder). Onderbouw de onderzoeksinspanning ecologisch.</td></tr>
+<tr><td>geen veldonderzoek, alleen een melding</td><td>Voor deze soort plant de tool geen bezoeken, maar geeft hij een melding, bijvoorbeeld omdat de soort landelijk is vrijgesteld (bruine kikker, gewone pad e.a.) of in Nederland als verdwenen geldt (o.a. heldenbok, juchtleerkever).</td></tr>
+</table>
 <h3>Meldingen bij het kiezen</h3>
 <table>
 <tr><th>Melding</th><th>Betekenis</th></tr>
-<tr><td>… zijn alternatieven voor elkaar</td><td>Deze functies onderzoeken hetzelfde met een andere methode of volgens een andere bron (bijvoorbeeld NGB tegenover BIJ12). Kies wat voor het project nodig is; meestal is dat één van de opties.</td></tr>
+<tr><td>… zijn alternatieven voor elkaar</td><td>Deze functies onderzoeken hetzelfde met een andere methode of volgens een andere bron (bijvoorbeeld NGB tegenover BIJ12). Kies wat voor het project nodig is; meestal is dat één van de opties. Sommige methoden mogen wel samen, zoals eDNA en elektrovisserij bij de grote modderkruiper.</td></tr>
 <tr><td>… hoort altijd bij het onderzoek</td><td>Deze functie is bij deze soort altijd nodig, naast de methode die je hebt gekozen.</td></tr>
 <tr><td>… is alleen aanvullend bedoeld</td><td>Deze functie is geen zelfstandig onderzoek; kies er een hoofdmethode bij.</td></tr>
+<tr><td>Aanbevolen: selecteer ook …</td><td>Een functie die vooraf of erbij hoort, zoals het verkennend onderzoek in het bladloze seizoen bij vleermuizen, of bij de boomkikker het zomerbiotoop naast het voortplantingsbiotoop.</td></tr>
+<tr><td>Geen geldend onderzoeksprotocol</td><td>De functie is indicatief. De bron staat erbij; de ecoloog onderbouwt de inspanning.</td></tr>
+<tr><td>Geen bronperiode beschikbaar</td><td>De functie staat op jaarrond omdat de bron geen periode noemt. Kies zelf de geschikte onderzoeksperiode en leg die vast.</td></tr>
+<tr><td>Provinciale melding</td><td>Een afwijkende eis van de gekozen provincie, bijvoorbeeld dat uitsluiten op basis van alleen een gebouwinspectie in Gelderland niet is toegestaan.</td></tr>
+<tr><td>75%-vuistregel (vleermuizen)</td><td>Bij kraam-, zomer- en paarverblijfplaatsen, zwermende dieren en uitvliegtellingen: is vanuit één positie in het donker meer dan een kwart van het onderzoeksgebied niet te overzien of te beluisteren, zet dan een extra waarnemer in, totdat het hele gebied goed in beeld is (Vleermuisprotocol 2021, Aanwijzingen, punt 1). Plan het aantal veldwerkers hierop.</td></tr>
+<tr><td>Kleine marterachtigen: worst case</td><td>Bij geschikt leefgebied kan de aanwezigheid op basis van de habitatbeoordeling uit het verkennend onderzoek worden aangenomen; verdiepend onderzoek is dan niet nodig (Kennisdocument Kleine marterachtigen, p. 26).</td></tr>
 </table>
 <h3>Algemene broedvogels</h3>
 <p>Met het vinkje <strong>Algemene broedvogels: broedseizoen tonen</strong> verschijnt het broedseizoen (15 maart t/m 15 juli) als aandachtsperiode in de tijdlijn, het veldbezoekplan en de export. Dit is geen onderzoeksprotocol en levert geen veldbezoeken op. Enkele soorten broeden eerder of later; de Vogelrichtlijn en de algemene zorgplicht gelden altijd.</p>
 
 <h2 id="tijdlijn"><span class="step">3</span>Tijdlijn en voortgang</h2>
-<p>Per functie zie je een balk over twee jaar met de streep van vandaag en, als je die hebt ingevuld, de deadline.</p>
+<p>Per functie zie je een balk met de streep van vandaag en, als je die hebt ingevuld, de startdatum en de deadline. Loopt het onderzoek langer door, dan loopt de tijdlijn mee tot en met 2028.</p>
 <table>
 <tr><th>Begrip</th><th>Betekenis</th></tr>
 <tr><td>Ideale periode</td><td>De periode die het protocol als optimaal noemt (donkere balk).</td></tr>
 <tr><td>Suboptimale periode</td><td>De ruimere periode die het protocol toestaat, vaak met extra voorwaarden of meer inspanning (lichte balk).</td></tr>
 <tr><td>Vast bezoekmoment</td><td>Een bezoek dat in een eigen periode moet vallen, bijvoorbeeld "één bezoek in juni".</td></tr>
 <tr><td>Tussenperiode</td><td>Het minimum aantal dagen tussen twee bezoeken van dezelfde functie.</td></tr>
-<tr><td>Let op</td><td>Extra regels uit de bron, zoals "minimaal 30 dagen tussen het eerste en het laatste bezoek" of "maximaal 21 dagen tussen opeenvolgende bezoeken".</td></tr>
+<tr><td>Bezoekschema</td><td>Bij onderzoek met materiaal in het veld staat per bezoek wat er gebeurt: plaatsen, controleren of ophalen (fuiken, reptielplaten, cameravallen, inloopvallen, batdetectors), met de gewenningsperiode die de bron noemt.</td></tr>
+<tr><td>Let op</td><td>Extra regels uit de bron, zoals "minimaal 30 dagen tussen het eerste en het laatste bezoek" of "maximaal 1 dag tussen opeenvolgende bezoeken".</td></tr>
 <tr><td>Weer</td><td>De weersomstandigheden uit het protocol (temperatuur, wind, neerslag). Controleer deze altijd vlak voor het bezoek.</td></tr>
 </table>
 <h3>Status van een functie</h3>
 <ul>
 <li><strong>Venster nu open</strong>: je kunt nu bezoeken uitvoeren. Staat er "maar suboptimaal" bij, dan lukt het alleen nog in de suboptimale periode of met een verkorte tussenperiode.</li>
 <li><strong>Nog te plannen</strong>: het venster moet nog beginnen. Is het lopende seizoen niet meer haalbaar en is er nog niets uitgevoerd, dan schuift de functie door naar het volgende seizoen.</li>
+<li><strong>Uitgesteld naar …</strong>: je hebt aangevinkt dat het onderzoek dit kalenderjaar geen bezoeken meer krijgt. Het hele onderzoek wordt dan in het volgende jaar ingepland. Dit kan zolang er nog geen bezoek is uitgevoerd.</li>
 <li><strong>Let op — risico</strong>: de resterende bezoeken passen niet meer binnen het venster of vóór de deadline.</li>
 <li><strong>Compleet</strong>: alle bezoeken zijn uitgevoerd of vervallen.</li>
 </ul>
 <h3>Voortgang bijhouden</h3>
-<p>Klap bij een functie <strong>Bezoeken en voortgang</strong> open. Per bezoek kies je een status (nog te plannen, gepland, uitgevoerd, vervallen) en vul je als je wilt een datum, uitvoerder en notitie in. De planner rekent daarna opnieuw: een uitgevoerd bezoek telt niet meer mee en het volgende bezoek kan pas na de tussenperiode. Valt een datum buiten het venster of te dicht op een ander bezoek, dan zie je een waarschuwing.</p>
+<p>Klap bij een functie <strong>Bezoeken en voortgang</strong> open. Per bezoek kies je een status (nog te plannen, gepland, uitgevoerd, vervallen) en vul je als je wilt een datum, uitvoerder en notitie in. De planner rekent daarna opnieuw: een uitgevoerd bezoek telt niet meer mee en het volgende bezoek kan pas na de tussenperiode. Valt een datum buiten het venster of te dicht op een ander bezoek, dan zie je een waarschuwing bij dat bezoek.</p>
 
 <h2 id="plan"><span class="step">4</span>Veldbezoekplan en export</h2>
 <p>Het veldbezoekplan deelt alle nog openstaande bezoeken in zo min mogelijk veldbezoeken in. Het is een voorstel: jij bepaalt de uiteindelijke data.</p>
 <ul>
-<li>Per veldbezoek zie je de <strong>vroegste en de uiterste datum</strong> en welke functies je dan combineert.</li>
+<li>Per veldbezoek zie je de <strong>vroegste en de uiterste datum</strong>, welke functies je dan combineert, het tijdstip, het aantal personen en het weer.</li>
 <li>Bij <strong>Tussenperiode</strong> staat hoeveel dagen er minimaal na een eerder veldbezoek moeten zitten. Noemt de bron geen tussenperiode, dan spreidt de planner de bezoeken indicatief over de periode; dat staat er dan bij.</li>
-<li>De planner houdt rekening met vaste bezoekmomenten, het tijdstip op de dag, uitgevoerde en geplande bezoeken en de deadline.</li>
+<li>De planner houdt rekening met vaste bezoekmomenten, het tijdstip op de dag, de volgorde van functies (bijvoorbeeld eerst het verkennend vleermuisonderzoek), uitgevoerde en geplande bezoeken, de startdatum en de deadline.</li>
+<li>Bovenaan het plan staan de <strong>aandachtspunten</strong>: alle meldingen uit stap 2, zoals indicatieve functies, provinciale eisen en de 75%-vuistregel.</li>
 <li>Met <strong>Markeer dit bezoek als</strong> zet je alle functies van een veldbezoek in één keer op gepland of uitgevoerd.</li>
 </ul>
 <h3>Instellingen</h3>
@@ -116,20 +138,32 @@ th{color:var(--soft);font-weight:600}
 <tr><td>Ook combineren tussen verschillende groepen</td><td>Standaard combineert de planner alleen binnen een groep (vleermuizen met vleermuizen, vogels met vogels). Met dit vinkje mag alles bij elkaar.</td></tr>
 <tr><td>Suboptimale periodes benutten</td><td>Standaard blijft de planner in de ideale periode waar dat haalbaar is. Met dit vinkje gebruikt hij ook de suboptimale periodes als dat veldbezoeken bespaart of het onderzoek nog dit seizoen mogelijk maakt.</td></tr>
 <tr><td>Maximale duur van een gecombineerd bezoek</td><td>Functies worden alleen gecombineerd als het hele bezoek binnen deze duur past.</td></tr>
-<tr><td>Plannen vanaf</td><td>Laat het plan op een latere datum beginnen, bijvoorbeeld als het project pas in maart start.</td></tr>
 </table>
 <h3>Exporteren</h3>
 <ul>
 <li><strong>Excel-planning</strong>: een planblad met gele invulkolommen voor je eigen data (de cel kleurt groen, oranje of rood), een weektijdlijn, de voorgestelde veldbezoeken, de voortgang per bezoek en een blad met bronnen en voorwaarden.</li>
-<li><strong>Printbare samenvatting</strong>: een los bestand dat je in de browser opent en afdrukt of als PDF bewaart.</li>
+<li><strong>Printbare samenvatting</strong>: een los bestand met het veldbezoekplan en de tijdlijn, dat je in de browser opent en afdrukt of als PDF bewaart.</li>
+<li>Met het vinkje <strong>Toelichting per veldbezoek opnemen</strong> komt in de export ook de tijdberekening, de tussenperiodes per functie en de aannames te staan.</li>
 </ul>
 
-<h2 id="bibliotheek">Bibliotheek</h2>
+<h2 id="bibliotheek">Bibliotheek en bronnen</h2>
 <ul>
-<li>De bibliotheek bevat per soort de functies met periodes, aantal bezoeken, tijdstip, voorwaarden, bron en een link naar het brondocument.</li>
+<li>De bibliotheek bevat per soort de functies met periodes, aantal bezoeken, tijdstip, voorwaarden, bezoekschema, bron en een link naar het brondocument.</li>
 <li>Je kunt een functie aanpassen of een eigen functie toevoegen. Dat komt in een eigen laag bovenop de standaardbibliotheek; de functie krijgt het label "aangepast" of "eigen".</li>
 <li>Bij een nieuwe versie van de standaardbibliotheek zie je een melding met wat er is gewijzigd. Je eigen aanpassingen blijven staan; je kunt ze per functie terugzetten naar de standaard.</li>
 </ul>
+<h3>Waar de gegevens vandaan komen</h3>
+<table>
+<tr><th>Soortgroep</th><th>Bron</th></tr>
+<tr><td>Vleermuizen</td><td>Vleermuisprotocol 2021 (geactualiseerd voor de meervleermuis, 2025), Kennisdocument Meervleermuis (BIJ12, november 2026). Voor zeer zeldzame soorten zonder eigen protocol (hoefijzerneuzen, mopsvleermuis, noordse en grote rosse vleermuis) zijn de functies van een vergelijkbare soort overgenomen en als indicatief gemarkeerd.</td></tr>
+<tr><td>Grondgebonden zoogdieren</td><td>BIJ12-kennisdocumenten; Zodion-handleidingen (hazelmuis, otter, boommarter); Handreiking Waterspitsmuis 2025 (provinciaal).</td></tr>
+<tr><td>Vogels</td><td>BIJ12-kennisdocumenten; voor de overige soorten op de provinciale nestlijsten de datumgrenzen uit de Handleiding Sovon Broedvogelmonitoring (2023, bijlage 2); ochtendbezoeken vanaf zonsopkomst tot uiterlijk 2 uur erna.</td></tr>
+<tr><td>Amfibieën, reptielen, vissen</td><td>NGB-soortinventarisatieprotocollen, BIJ12-kennisdocumenten, RAVON (NEM-handleidingen, eDNA-protocollen 2025).</td></tr>
+<tr><td>Vlinders en libellen</td><td>De Vlinderstichting (2023), met de piek- en flankperiodes uit de bijlage.</td></tr>
+<tr><td>Kevers, mossen</td><td>EIS Kenniscentrum Insecten, Rijkswaterstaat (protocol 104.001), BLWG.</td></tr>
+<tr><td>Vaatplanten</td><td>FLORON / NDFF Verspreidingsatlas: één indicatief bezoek in de bloeiperiode per soort, omdat er geen protocol is.</td></tr>
+<tr><td>Provinciale eisen</td><td>Omgevingsverordeningen, beleidsregels en nestlijsten van de provincies (o.a. via NatuurInclusief, Lijst beschermde soorten Ow).</td></tr>
+</table>
 
 <h2 id="opslag">Opslag en privacy</h2>
 <p>Alles wat je invult blijft in je eigen browser op dit apparaat staan. Er wordt niets verzonden. Wis je de browsergegevens of werk je op een ander apparaat, dan zijn je projecten daar niet beschikbaar. Download daarom regelmatig de Excel-planning of de printbare samenvatting.</p>
