@@ -61,10 +61,11 @@ th{color:var(--soft);font-weight:600}
 <h2 id="project"><span class="step">1</span>Project</h2>
 <ul>
 <li>Kies <strong>Nieuw project</strong> en vul een naam en locatie in.</li>
-<li>Kies de <strong>provincie (bevoegd gezag)</strong>. Die bepaalt welke provinciale vrijstellingen, provinciale onderzoekseisen en welke lijst met jaarrond beschermde nesten in stap 2 worden getoond. Zonder provincie zie je de landelijke situatie.</li>
+<li>Kies de <strong>provincie (bevoegd gezag)</strong>. Die bepaalt welke provinciale vrijstellingen, provinciale onderzoekseisen en welke lijst met jaarrond beschermde nesten in stap 2 worden getoond. Zonder provincie zie je de landelijke situatie. De provincie bepaalt ook de tijden van zonsopkomst en zonsondergang waarmee de planner rekent (zie hieronder).</li>
 <li>De <strong>startdatum</strong> is optioneel: de planner plant bezoeken pas vanaf die datum, bijvoorbeeld als het project pas in maart begint. Leeg betekent vanaf vandaag.</li>
 <li>De <strong>harde deadline</strong> is optioneel: de datum waarop het onderzoek klaar moet zijn, bijvoorbeeld voor een vergunningaanvraag. De planner waarschuwt als een functie daarvóór niet haalbaar is.</li>
 <li>Je kunt meerdere projecten bijhouden, een project dupliceren (zonder de voortgang), archiveren of verwijderen.</li>
+<li>Met <strong>Exporteren</strong> sla je het actieve project op als bestand (.json), inclusief de gekozen functies en de voortgang per bezoek. Met <strong>Importeren</strong> laad je zo'n bestand weer in, bijvoorbeeld op een andere computer, bij een collega of als back-up. Bestaat het project al, dan komt er een kopie bij met "(geïmporteerd)" achter de naam. Gebruikt het project een eigen functie die in jouw bibliotheek niet voorkomt, dan meldt de planner dat.</li>
 <li>Het <strong>projectenoverzicht</strong> zet alle projecten naast elkaar, met het aantal uitgevoerde bezoeken en eventuele risico's.</li>
 </ul>
 
@@ -118,6 +119,8 @@ th{color:var(--soft);font-weight:600}
 <tr><td>Let op</td><td>Extra regels uit de bron, zoals "minimaal 30 dagen tussen het eerste en het laatste bezoek" of "maximaal 1 dag tussen opeenvolgende bezoeken".</td></tr>
 <tr><td>Weer</td><td>De weersomstandigheden uit het protocol (temperatuur, wind, neerslag). Controleer deze altijd vlak voor het bezoek.</td></tr>
 </table>
+<h3>Zonsopkomst en zonsondergang</h3>
+<p>Tijden ten opzichte van zonsopkomst en zonsondergang rekent de planner om met de datum van het bezoek. Is in stap 1 een provincie gekozen, dan gebruikt de planner de ligging van die provincie. Tussen het noordoosten en het zuidwesten van het land scheelt dat tot ongeveer een kwartier. Zonder provincie rekent de planner met het midden van Nederland. Controleer de exacte tijden vlak voor het bezoek.</p>
 <h3>Status van een functie</h3>
 <ul>
 <li><strong>Venster nu open</strong>: je kunt nu bezoeken uitvoeren. Staat er "maar suboptimaal" bij, dan lukt het alleen nog in de suboptimale periode of met een verkorte tussenperiode.</li>
@@ -179,7 +182,7 @@ th{color:var(--soft);font-weight:600}
 
 <h2 id="opslag">Opslag en privacy</h2>
 <p>De planner werkt ook op telefoon en tablet; de bezoekregels in stap 3 schikken zich dan onder elkaar.</p>
-<p>Alles wat je invult blijft in je eigen browser op dit apparaat staan. Er wordt niets verzonden. Wis je de browsergegevens of werk je op een ander apparaat, dan zijn je projecten daar niet beschikbaar. Download daarom regelmatig de Excel-planning of de printbare samenvatting.</p>
+<p>Alles wat je invult blijft in je eigen browser op dit apparaat staan. Er wordt niets verzonden. Wis je de browsergegevens of werk je op een ander apparaat, dan zijn je projecten daar niet beschikbaar. Exporteer daarom regelmatig je projecten (stap 1, <strong>Exporteren</strong>) als back-up, of om ze op een ander apparaat te gebruiken.</p>
 
 <h2 id="fout">Fout gevonden?</h2>
 <p>Wijkt een waarde af van het protocol of werkt iets niet? Meld het via <a href="https://github.com/nfhuisman/veldwerkplanner/issues/new">GitHub</a> en noem de soort, de functie en de bron.</p>
