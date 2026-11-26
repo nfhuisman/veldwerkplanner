@@ -149,9 +149,14 @@ function invariants(sc, res) {
     const gap = Math.max(1, sc.strictSpacing && sc.strictSpacing.includes(fid) ? T : Math.min(T, Ts));
     const es = done.map(v => v.datum).concat(rs.map(r => r.es)).sort();
     const lf = done.map(v => v.datum).concat(rs.map(r => r.lf)).sort();
+    // met een bezoekschema gelden per bezoek de min./max. dagen uit het schema (bv. ochtend- en avondcontrole op één dag)
+    const sch = (f.schema || []), gapVoor = i => { const e = sch[i]; return (e && (e.min != null || e.max != null)) ? { min: e.min != null ? e.min : 0, max: e.max } : { min: gap }; };
     for (const [nm, arr] of [['vroegste', es], ['uiterste', lf]])
-      for (let i = 1; i < arr.length; i++) if (days(arr[i - 1], arr[i]) < gap)
-        fails.push({ regel: 4, msg: `${label(fid)}: bij de ${nm} data liggen ${arr[i - 1]} en ${arr[i]} ${days(arr[i - 1], arr[i])} dagen uit elkaar, minimaal ${gap}` });
+      for (let i = 1; i < arr.length; i++) {
+        const g = gapVoor(i), d = days(arr[i - 1], arr[i]);
+        if (d < g.min) fails.push({ regel: 4, msg: `${label(fid)}: bij de ${nm} data liggen ${arr[i - 1]} en ${arr[i]} ${d} dagen uit elkaar, minimaal ${g.min}` });
+        if (g.max != null && d > g.max) fails.push({ regel: 4, msg: `${label(fid)}: bij de ${nm} data liggen ${arr[i - 1]} en ${arr[i]} ${d} dagen uit elkaar, maximaal ${g.max}` });
+      }
     // regel 6: deelbezoeken — minstens 'aantal' veldbezoeken volledig binnen het deelvenster
     if (!vis.length && !hasProblem(fid)) (f.deelbezoeken || []).forEach(db => {
       const n = rs.filter(r => { for (let d = r.es; d <= r.lf; d = addD(d, 1)) if (!inDM(d, db.van, db.tot)) return false; return true; }).length;
