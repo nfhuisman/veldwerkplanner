@@ -409,6 +409,51 @@ export const cases = [
     })
   },
 
+  {
+    type: 'unit', regel: 11, naam: 'Weergave: zonsondergang van de volgende dag niet als "24 uur na zonsondergang"',
+    verwacht: '"zonsopkomst – zonsondergang" voor het venster overdag',
+    arg: {}, run: () => { const sl = slotFromText('vanaf zonsopkomst tot zonsondergang', 0); return `${fmtPoint(sl.s)} – ${fmtPoint(sl.e)}`; },
+    check: v => v === 'zonsopkomst – zonsondergang' ? [] : [`app toont "${v}"`]
+  },
+  {
+    type: 'unit', regel: 11, naam: 'Weergave: "0 min na zonsondergang" wordt "zonsondergang"',
+    verwacht: '"vanaf zonsondergang tot zonsopkomst"',
+    arg: {}, run: () => prettyTijd('vanaf 0 min na zonsondergang tot 0 uur voor zonsopkomst'),
+    check: v => v === 'vanaf zonsondergang tot zonsopkomst' ? [] : [`app toont "${v}"`]
+  },
+
+  // ======================= Regel 12 (26-11-2026): antwoorden eigenaar op de vragen van de testgebruiker =======================
+  {
+    type: 'plan', regel: 12, naam: 'Das sporen/burchten: één ronde per seizoen (najaar, winter, voorjaar), vandaag 25-11-2026',
+    verwacht: 'najaar nog 25–30 nov 2026, winter dec 2026–feb 2027, voorjaar mrt–mei 2027',
+    scenario: scen({ today: '2026-11-25', lib: ['sp-das--inventariseren-van-achtergelaten-sporen-burchten'] }),
+    check: all(count(3, '3 rondes'), r => {
+      const v = of(r, 'sp-das--inventariseren-van-achtergelaten-sporen-burchten'), fout = [];
+      const ramen = [['2026-11-25', '2026-11-30', 'najaar'], ['2026-12-01', '2027-02-28', 'winter'], ['2027-03-01', '2027-05-31', 'voorjaar']];
+      ramen.forEach(([a, b, nm]) => { if (!v.some(x => x.es >= a && x.lf <= b)) fout.push({ regel: 12, msg: `geen ronde in het ${nm} (${a} … ${b}); plan: ${v.map(x => x.es + '…' + x.lf).join(', ')}` }); });
+      return fout;
+    })
+  },
+  slotCase('Gewone dwergvleermuis paarverblijf: niet in de laatste 2 uur voor zonsopkomst', 'vanaf 60 min na zonsondergang tot 2 uur voor zonsopkomst', 2, JUN, JUN.ss + 60, JUN.sr - 120),
+  {
+    type: 'unit', regel: 12, naam: 'Waterspitsmuis is in alle provincies te kiezen (ook Gelderland)',
+    verwacht: '4 functies zichtbaar bij provincie Gelderland',
+    arg: {}, run: () => { const sp = species.find(s => s.naam === 'Waterspitsmuis'); return sp.functies.filter(f => provFnGeldt(f, 'GE')).length; },
+    check: v => v === 4 ? [] : [`${v} functies zichtbaar in Gelderland`]
+  },
+  {
+    type: 'unit', regel: 12, naam: 'Kamsalamander: fuiken hoort bij beide NGB-aanpakken; zaklamp en schepnet zijn alternatieven',
+    verwacht: 'fuiken: "hoort bij aanpak NGB zaklamp én bij aanpak NGB schepnet"; zaklamp: alternatief voor NGB schepnet',
+    arg: {}, run: () => { const sp = species.find(s => s.naam === 'Kamsalamander'), f = id => sp.functies.find(x => x.id === 'sp-kamsalamander--' + id);
+      return [altUitleg(f('amfibiefuikenonderzoek'), sp), altUitleg(f('voortplantingsbiotoop-zicht-met-zaklamp'), sp)]; },
+    check: v => {
+      const fout = [];
+      if (!/hoort bij aanpak NGB zaklamp én bij aanpak NGB schepnet/.test(v[0])) fout.push(`fuiken: "${v[0]}"`);
+      if (!/aanpak NGB zaklamp \(alternatief voor aanpak .*NGB schepnet/.test(v[1])) fout.push(`zaklamp: "${v[1]}"`);
+      return fout;
+    }
+  },
+
   // ======================= Regel 7: alternatieven =======================
   {
     type: 'plan', regel: 7, naam: 'Beide gierzwaluw-alternatieven (Omvang plangebied) geselecteerd → melding alternatieven',
