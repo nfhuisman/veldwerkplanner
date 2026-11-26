@@ -1,0 +1,260 @@
+{
+ "versie": "2026-11-26-b",
+ "beschrijving": "Antwoorden eigenaar op de 14 vragen van de testgebruiker (ronde 1).",
+ "perSoort": [
+  {
+   "id": "sp-waterspitsmuis",
+   "wijzig": {
+    "melding": "Bij plangebieden groter dan 4,5 ha of meer dan 900 m lijnvormig habitat vraagt de bron eDNA plus minimaal één extra methode (en eDNA in minimaal twee fasen met minimaal 4 weken ertussen). Kies de methoden daarop af."
+   }
+  }
+ ],
+ "perFunctie": [
+  {
+   "id": "sp-gewone-dwergvleermuis--volledig-inspecteerbaar-winterverblijfplaats",
+   "voorwaardenVervang": [
+    [
+     "Tabel 2.2:",
+     "Kennisdocument, tabel 2.2 (niet leidend; het Vleermuisprotocol 2021 is leidend):"
+    ]
+   ]
+  },
+  {
+   "id": "sp-gewone-dwergvleermuis--kraamverblijfplaats",
+   "voorwaardenVervang": [
+    [
+     "Tabel 2.2:",
+     "Kennisdocument, tabel 2.2 (niet leidend; het Vleermuisprotocol 2021 is leidend):"
+    ]
+   ]
+  },
+  {
+   "id": "sp-gewone-dwergvleermuis--zomerverblijfplaats",
+   "voorwaardenVervang": [
+    [
+     "Tabel 2.2:",
+     "Kennisdocument, tabel 2.2 (niet leidend; het Vleermuisprotocol 2021 is leidend):"
+    ]
+   ]
+  },
+  {
+   "id": "sp-gewone-dwergvleermuis--paarverblijf-zwermplaats",
+   "voorwaardenVervang": [
+    [
+     "Tabel 2.2:",
+     "Kennisdocument, tabel 2.2 (niet leidend; het Vleermuisprotocol 2021 is leidend):"
+    ]
+   ],
+   "wijzig": {
+    "tijdstip": "vanaf 60 min na zonsondergang tot 2 uur voor zonsopkomst"
+   },
+   "voorwaardenToevoegen": "Bezoek van 2 uur in de nacht, niet in de laatste 2 uur voor zonsopkomst: een ochtendbezoek is ongeschikt voor paarverblijf- en zwermplaatsen."
+  },
+  {
+   "id": "sp-gewone-dwergvleermuis--vliegroute",
+   "voorwaardenVervang": [
+    [
+     "Tabel 2.2:",
+     "Kennisdocument, tabel 2.2 (niet leidend; het Vleermuisprotocol 2021 is leidend):"
+    ]
+   ]
+  },
+  {
+   "id": "sp-gewone-dwergvleermuis--foerageergebied",
+   "voorwaardenVervang": [
+    [
+     "Tabel 2.2:",
+     "Kennisdocument, tabel 2.2 (niet leidend; het Vleermuisprotocol 2021 is leidend):"
+    ]
+   ]
+  },
+  {
+   "id": "sp-gewone-dwergvleermuis--ge-kraam",
+   "voorwaardenVervang": [
+    [
+     "Tabel 2.2:",
+     "Kennisdocument, tabel 2.2 (niet leidend; het Vleermuisprotocol 2021 is leidend):"
+    ]
+   ]
+  },
+  {
+   "id": "sp-gewone-dwergvleermuis--ge-paar-buitengebied",
+   "voorwaardenVervang": [
+    [
+     "Tabel 2.2:",
+     "Kennisdocument, tabel 2.2 (niet leidend; het Vleermuisprotocol 2021 is leidend):"
+    ]
+   ]
+  },
+  {
+   "id": "sp-gierzwaluw--nest-alternatieve-aanvullende-methode-dakpannen-",
+   "verwijder": true
+  },
+  {
+   "id": "sp-gierzwaluw--nest-klein-plangebied-max-3-woningen-gierend-in-",
+   "wijzig": {
+    "vereist": []
+   }
+  },
+  {
+   "id": "sp-huismus--waarneming-in-potentieel-broedbiotoop",
+   "wijzig": {
+    "tijdstip": "vanaf zonsopkomst tot 4 uur na zonsopkomst"
+   }
+  },
+  {
+   "id": "sp-huismus--aantonen-afwezigheid-optie-a-2-bezoeken",
+   "wijzig": {
+    "tijdstip": "vanaf zonsopkomst tot 4 uur na zonsopkomst"
+   }
+  },
+  {
+   "id": "sp-huismus--aantonen-afwezigheid-optie-b-3-bezoeken",
+   "wijzig": {
+    "tijdstip": "vanaf zonsopkomst tot 4 uur na zonsopkomst"
+   }
+  },
+  {
+   "id": "sp-huismus--nestindicatieve-waarneming",
+   "wijzig": {
+    "tijdstip": "vanaf zonsopkomst tot 4 uur na zonsopkomst"
+   }
+  },
+  {
+   "id": "sp-waterspitsmuis--inloopvallen",
+   "wijzig": {
+    "provincies": [],
+    "schema": [
+     {
+      "rol": "vallen plaatsen (pre-baiten, niet op scherp)",
+      "tijdstip": "vanaf zonsopkomst tot zonsondergang"
+     },
+     {
+      "rol": "vallen op scherp zetten",
+      "min": 3,
+      "tijdstip": "vanaf zonsopkomst tot zonsondergang"
+     },
+     {
+      "rol": "controle 1 (nacht)",
+      "min": 0,
+      "max": 0,
+      "tijdstip": "vanaf 20:00 tot middernacht"
+     },
+     {
+      "rol": "controle 2 (ochtend)",
+      "min": 1,
+      "max": 1,
+      "tijdstip": "vanaf zonsopkomst tot 4 uur na zonsopkomst"
+     },
+     {
+      "rol": "controle 3 (middag)",
+      "min": 0,
+      "max": 0,
+      "tijdstip": "vanaf 12:00 tot 16:00"
+     },
+     {
+      "rol": "controle 4 (nacht)",
+      "min": 0,
+      "max": 0,
+      "tijdstip": "vanaf 20:00 tot middernacht"
+     },
+     {
+      "rol": "controle 5 (ochtend)",
+      "min": 1,
+      "max": 1,
+      "tijdstip": "vanaf zonsopkomst tot 4 uur na zonsopkomst"
+     },
+     {
+      "rol": "controle 6 (middag)",
+      "min": 0,
+      "max": 0,
+      "tijdstip": "vanaf 12:00 tot 16:00"
+     },
+     {
+      "rol": "controle 7 (nacht)",
+      "min": 0,
+      "max": 0,
+      "tijdstip": "vanaf 20:00 tot middernacht"
+     },
+     {
+      "rol": "controle 8 (ochtend) + vallen ophalen",
+      "min": 1,
+      "max": 1,
+      "tijdstip": "vanaf zonsopkomst tot 4 uur na zonsopkomst"
+     }
+    ]
+   },
+   "voorwaardenVervang": [
+    [
+     "dag 5 en 6 telkens 's ochtends, 's middags en 's nachts",
+     "dag 5 en 6 telkens 's ochtends, 's middags (12:00–16:00) en 's nachts (20:00–middernacht)"
+    ]
+   ]
+  },
+  {
+   "id": "sp-waterspitsmuis--cameravallen-optimaal",
+   "wijzig": {
+    "provincies": []
+   }
+  },
+  {
+   "id": "sp-waterspitsmuis--camera-edna-suboptimaal",
+   "wijzig": {
+    "provincies": []
+   }
+  },
+  {
+   "id": "sp-waterspitsmuis--edna",
+   "wijzig": {
+    "provincies": []
+   }
+  },
+  {
+   "id": "sp-das--inventariseren-van-achtergelaten-sporen-burchten",
+   "wijzig": {
+    "deelbezoeken": [
+     {
+      "aantal": 1,
+      "van": "01-09",
+      "tot": "30-11",
+      "tijdstip": ""
+     },
+     {
+      "aantal": 1,
+      "van": "01-12",
+      "tot": "28-02",
+      "tijdstip": ""
+     },
+     {
+      "aantal": 1,
+      "van": "01-03",
+      "tot": "31-05",
+      "tijdstip": ""
+     }
+    ]
+   },
+   "voorwaardenToevoegen": "Minimaal 3 rondes verspreid door het jaar: één in het najaar (sep–nov), één in de winter (dec–feb) en één in het voorjaar (mrt–mei). Juni t/m augustus is suboptimaal."
+  },
+  {
+   "id": "sp-kamsalamander--methode-aantonen-van-exemplaren-in-het-water-sch",
+   "wijzig": {
+    "naam": "Methode: aantonen van exemplaren in het water, schepnet (larven en volwassen dieren) (BIJ12, oudere bron; NGB heeft voorkeur)"
+   },
+   "voorwaardenToevoegen": "Oudere aanpak uit het Kennisdocument (BIJ12). Het NGB-protocol is recenter en heeft de voorkeur: amfibiefuiken samen met óf zaklamp óf schepnet."
+  },
+  {
+   "id": "sp-kamsalamander--methode-aantonen-van-exemplaren-in-het-water-fui",
+   "wijzig": {
+    "naam": "Methode: aantonen van exemplaren in het water, fuiken (volwassen dieren) (BIJ12, oudere bron; NGB heeft voorkeur)"
+   },
+   "voorwaardenToevoegen": "Oudere aanpak uit het Kennisdocument (BIJ12). Het NGB-protocol is recenter en heeft de voorkeur: amfibiefuiken samen met óf zaklamp óf schepnet."
+  },
+  {
+   "id": "sp-kamsalamander--methode-aantonen-van-exemplaren-in-het-water-zic",
+   "wijzig": {
+    "naam": "Methode: aantonen van exemplaren in het water, zichtwaarneming 's nachts met een zaklamp (BIJ12, oudere bron; NGB heeft voorkeur)"
+   },
+   "voorwaardenToevoegen": "Oudere aanpak uit het Kennisdocument (BIJ12). Het NGB-protocol is recenter en heeft de voorkeur: amfibiefuiken samen met óf zaklamp óf schepnet."
+  }
+ ]
+}
