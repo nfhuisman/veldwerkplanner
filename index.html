@@ -129,6 +129,7 @@ details.check-group > summary input{width:auto; flex:0 0 auto; cursor:pointer;}
 .visit-row input,.visit-row select{font:inherit; padding:.25rem .4rem; border:1px solid var(--line); border-radius:4px; background:var(--paper); color:var(--ink); width:100%; box-sizing:border-box;}
 .visit-row .vwarn{grid-column:1/-1; font-size:.78rem; color:var(--rust);}
 .visit-row .vinfo{grid-column:1/-1; font-size:.78rem; color:var(--ink-soft);}
+@media (max-width:640px){ .visit-row{grid-template-columns:1fr 1fr;} .visit-row .vl{grid-column:1/-1;} .visit-row .vn{grid-column:1/-1;} }
 .mark-row{display:flex; gap:.4rem; flex-wrap:wrap; align-items:center; font-size:.8rem; margin-top:.5rem; color:var(--ink-soft);}
 .mark-row select,.mark-row input{font:inherit; padding:.2rem .4rem; border:1px solid var(--line); border-radius:4px; background:var(--paper); color:var(--ink);}
 table.ov{border-collapse:collapse; width:100%; font-size:.84rem;}
@@ -684,7 +685,7 @@ function speciesBlockHtml(sp){
               ${(hasIdealOf(f) && f.vanSub && f.totSub) ? `<span class="tag">suboptimaal: ${escapeHtml(f.vanSub)} – ${escapeHtml(f.totSub)}</span>` : ''}
               <span class="tag">${f.bezoeken} bezoek${f.bezoeken==1?'':'en'}</span>
               ${f.tussen ? `<span class="tag">min. ${f.tussen}d tussen bezoeken${f.tussenSub ? ` (sub: ${f.tussenSub}d)` : ''}</span>` : ''}
-              ${f.tijdstip ? `<span class="tag">${escapeHtml(f.tijdstip)}</span>` : ''}
+              ${f.tijdstip ? `<span class="tag">${escapeHtml(prettyTijd(f.tijdstip))}</span>` : ''}
               ${f.duur ? `<span class="tag">${f.duur}u per bezoek</span>` : ''}
               <span class="tag">min. ${f.personen||1} ${((f.personen||1)==1)?'persoon':'personen'}</span>
               <span class="tag">${funcOrigin(f)}</span>
@@ -1057,7 +1058,12 @@ function renderChecklist(){
           return `<details class="check-group rare-group" data-cat-details="${escapeAttr(cat)}|zeldzaam" ${(anySel || openCats.has(cat+'|zeldzaam'))?'open':''}><summary>Zeldzame soorten <span class="count">(${rare.length}) — alleen bij aanwijzingen of binnen het verspreidingsgebied</span></summary>${rare.map(sp=>speciesCheckGroupHtml(sp)).join('')}</details>`; })()}</div>
       </details>
     `;
-  }).join('');
+  }).join('') + (()=>{
+    // soorten waarvoor alleen provinciale eisen elders in de bibliotheek staan: niet stilzwijgend weglaten
+    const elders = species.filter(sp=> sp.functies.length && !zichtFn(sp).length && sp.functies.every(f=>isProvFn(f)));
+    if(!elders.length) return '';
+    return `<div class="detail" style="font-size:.8rem; color:var(--ink-soft); margin-top:.6rem;">Niet getoond${project.provincie?` in ${escapeHtml(provNaam(project.provincie))}`:''}: ${elders.map(sp=>`${escapeHtml(sp.naam)} (alleen provinciale eisen voor ${escapeHtml([...new Set(sp.functies.flatMap(f=>f.provincies))].map(provNaam).join(', '))})`).join('; ')}. Kies die provincie in stap 1 of bekijk de soort in de Bibliotheek.</div>`;
+  })();
   const syncSelectAll = spId => {
     const sp = species.find(s=>s.id===spId);
     const master = el.querySelector(`[data-select-all-species="${spId}"]`);
@@ -1516,6 +1522,8 @@ function visitsBlockHtml(f, a){
     const notes = [];
     if((rec.status==='uitgevoerd' || rec.status==='gepland') && rec.datum){
       const d = parseISO(rec.datum), w = inst.window;
+      const vandaag = new Date(); vandaag.setHours(0,0,0,0);
+      if(rec.status==='uitgevoerd' && d > vandaag) notes.push(`Uitgevoerd met een datum in de toekomst (${fmt(d)}). Klopt de datum? Gebruik "Gepland" voor een bezoek dat nog moet komen; de planning rekent nu met deze datum.`);
       if(d < w.outer.start || d > w.outer.end) notes.push(`Datum valt buiten het venster (${fmt(w.outer.start)} – ${fmt(w.outer.end)}).`);
       else if(w.hasSub && (d < w.ideal.start || d > w.ideal.end)) notes.push('Datum valt in de suboptimale periode.');
       dated.filter(o=>o.idx!==inst.idx).forEach(o=>{
@@ -1525,8 +1533,8 @@ function visitsBlockHtml(f, a){
     }
     const w = inst.window;
     const per = `${inst.kind==='pinned'?'vast moment: ':''}${fmt(w.ideal.start)} – ${fmt(w.ideal.end)}${w.hasSub?` (subopt. ${fmt(w.outer.start)} – ${fmt(w.outer.end)})`:''}`;
-    return `<div class="visit-row" data-vk="${escapeAttr(f.id+'|'+inst.idx)}">
-      <div class="vl"><b>Bezoek ${inst.idx+1}</b>${rolVan(f,inst.idx)?' · '+escapeHtml(rolVan(f,inst.idx)):''}<br><span class="m">${escapeHtml(per)}</span></div>
+    return `<div class="visit-row" data-vk="${escapeAttr(f.id+'|'+inst.idx)}" data-wv="${toN(w.outer.start)}" data-wt="${toN(w.outer.end)}">
+      <div class="vl"><b>Bezoek ${inst.idx+1}</b>${rolVan(f,inst.idx)?' · '+escapeHtml(rolVan(f,inst.idx)):''}<br><span class="m">${escapeHtml(per)}</span>${(f.schema && f.schema[inst.idx] && (f.schema[inst.idx].tijdstip || schemaGap(f,inst.idx))) ? `<br><span class="m">${[schemaGap(f,inst.idx) ? gapTxt(schemaGap(f,inst.idx), inst.idx) : '', f.schema[inst.idx].tijdstip ? prettyTijd(f.schema[inst.idx].tijdstip) : ''].filter(Boolean).map(escapeHtml).join(' · ')}</span>` : ''}</div>
       <select class="vs">${Object.keys(VSTAT).map(k=>`<option value="${k}" ${rec.status===k?'selected':''}>${VSTAT[k]}</option>`).join('')}</select>
       <input class="vd" type="date" value="${escapeAttr(rec.datum||'')}" title="Datum (optioneel)">
       <input class="vu" placeholder="Uitvoerder" value="${escapeAttr(rec.uitvoerder||'')}">
@@ -1559,7 +1567,24 @@ function wireVisits(root){
   root.querySelectorAll('.visit-row').forEach(row=>{
     const [fid, idx] = row.dataset.vk.split('|');
     const save = ()=>{
-      setVisit(fid, +idx, {status:row.querySelector('.vs').value, datum:row.querySelector('.vd').value, uitvoerder:row.querySelector('.vu').value.trim(), notitie:row.querySelector('.vn').value.trim()});
+      const rec = {status:row.querySelector('.vs').value, datum:row.querySelector('.vd').value, uitvoerder:row.querySelector('.vu').value.trim(), notitie:row.querySelector('.vn').value.trim()};
+      // Valt de datum buiten het venster van dit bezoek maar binnen dat van een nog open bezoek van dezelfde functie
+      // (bv. kraamverblijf: vast moment in juni en een algemeen bezoek mei–juli), koppel de datum dan aan dat bezoek.
+      if((rec.status==='uitgevoerd' || rec.status==='gepland') && rec.datum){
+        const n = toN(parseISO(rec.datum)), past = r => n >= +r.dataset.wv && n <= +r.dataset.wt;
+        if(!past(row)){
+          const ander = [...row.parentNode.querySelectorAll('.visit-row')].find(r=> r!==row && r.dataset.vk.split('|')[0]===fid && past(r)
+            && r.querySelector('.vs').value==='open' && !r.querySelector('.vd').value);
+          if(ander){
+            const oud = {status:'open', datum:'', uitvoerder:'', notitie:''};
+            setVisit(fid, +ander.dataset.vk.split('|')[1], rec);
+            setVisit(fid, +idx, oud);
+            renderTimeline();
+            return;
+          }
+        }
+      }
+      setVisit(fid, +idx, rec);
       renderTimeline();
     };
     row.querySelectorAll('select,input').forEach(el=> el.addEventListener('change', ()=>{
@@ -1593,7 +1618,11 @@ function renderTimeline(){
   window.TL_RANGE = {y0, y1};
   renderAxis();
 
-  el.innerHTML = selected.map(({soort, functie:f})=>{
+  const legenda = `<div class="tl-legenda" style="display:flex; flex-wrap:wrap; gap:.3rem 1rem; font-size:.78rem; color:var(--ink-soft); margin:0 0 .6rem;">`
+    + [['background:var(--moss);opacity:.55','ideale periode'],['background:var(--moss);opacity:.22','suboptimale periode'],['background:var(--rust);opacity:.5','risico (deadline of te weinig tijd)'],['background:var(--rust);opacity:.28','periode voorbij']]
+      .map(([st,t])=>`<span><i style="display:inline-block;width:14px;height:9px;vertical-align:middle;margin-right:4px;${st}"></i>${t}</span>`).join('')
+    + `<span><i style="display:inline-block;width:2px;height:12px;vertical-align:middle;margin-right:4px;background:var(--ink)"></i>vandaag</span></div>`;
+  el.innerHTML = legenda + selected.map(({soort, functie:f})=>{
     const a = ana.get(f.id);
     const {hasSub, thisW, nextW, isMissed, primary, risk} = a;
     const outer = primary.outer, ideal = primary.ideal;
@@ -1659,7 +1688,9 @@ function renderTimeline(){
       ? `<div class="detail"><strong>${seasonLbl(thisW)}:</strong> ${a.nietGestart?'vóór de startdatum':(a.tooLate?'niet meer haalbaar':'voorbij')}</div>` + yrLine(seasonLbl(nextW), nextW)
       : yrLine(seasonLbl(thisW), thisW) + (nextW.outer.start <= yearEnd ? yrLine(seasonLbl(nextW), nextW) : '');
     const indSp = spreidingIndicatief(f, primary);
-    const spacing = a.T ? ` (min. ${a.T}d tussen bezoeken${a.Ts<a.T?`, suboptimaal ${a.Ts}d`:''})`
+    const heeftSchema = !!(f.schema && f.schema.some((e,k)=>schemaGap(f,k)));
+    const spacing = heeftSchema ? ' (volgens het bezoekschema; zie de bezoeken hieronder voor de dagen en dagdelen)'
+      : a.T ? ` (min. ${a.T}d tussen bezoeken${a.Ts<a.T?`, suboptimaal ${a.Ts}d`:''})`
       : (f.spanMin ? ` (minimaal ${f.spanMin} dagen tussen het eerste en het laatste bezoek${indSp?`; het veldbezoekplan spreidt de bezoeken ca. ${indSp} dagen uit elkaar`:''})`
       : (indSp ? ` (geen tussenperiode in de bron; het veldbezoekplan spreidt indicatief ca. ${indSp}d)` : ''));
 
@@ -1677,7 +1708,7 @@ function renderTimeline(){
         </div>
         ${yearLines}
         ${pinnedLines}
-        <div class="detail"><strong>Bezoeken:</strong> ${a.M}${spacing}${f.tijdstip?` &nbsp; <strong>Tijdstip:</strong> ${escapeHtml(f.tijdstip)}`:''}${f.duur?` &nbsp; <strong>Duur:</strong> ${f.duur}u`:''} &nbsp; <strong>Min. aantal personen:</strong> ${f.personen||1}</div>
+        <div class="detail"><strong>Bezoeken:</strong> ${a.M}${spacing}${f.tijdstip?` &nbsp; <strong>Tijdstip:</strong> ${escapeHtml(prettyTijd(f.tijdstip))} <span style="color:var(--ink-soft)">(planner rekent met ${escapeHtml(slotUitleg(dualSlot(f, tijdSlot(f))))})</span>`:''}${f.duur?` &nbsp; <strong>Duur:</strong> ${f.duur}u`:''} &nbsp; <strong>Min. aantal personen:</strong> ${f.personen||1}</div>
         ${opbouwTxt(f) ? `<div class="detail"><strong>Opbouw:</strong> ${escapeHtml(opbouwTxt(f))}.</div>` : ''}
         ${(()=>{ const rr = regelTxt(f).filter(t=> !(f.spanMin && !a.T && t.startsWith('minimaal '+f.spanMin+' dagen tussen het eerste'))); return rr.length ? `<div class="detail"><strong>Let op:</strong> ${rr.join('; ')}.</div>` : ''; })()}
         ${weerVan(f) ? `<div class="detail weer"><strong>Weer:</strong> ${escapeHtml(weerVan(f))}</div>` : ''}
@@ -1858,14 +1889,34 @@ function pointVal(p, N, sun){
   return c - sun;
 }
 const pad2 = n => String(n).padStart(2,'0');
-function fmtPoint(p){
+function fmtPoint(p, ref){
   if(p.a==='C'){ const c = ((Math.round(p.off)%1440)+1440)%1440; return `${pad2(Math.floor(c/60))}:${pad2(c%60)}`; }
-  const m = Math.round(p.off);
+  let m = Math.round(p.off);
+  // "zonsondergang" van de volgende dag (zonsopkomst → zonsondergang) staat intern als +24 uur
+  if(p.a==='S' && m >= 1080) m -= 1440;
+  // grote afstand tot zon-op/onder (bv. "15 uur na zonsopkomst"): toon de kloktijd als die datum bekend is
+  if(ref && Math.abs(m) > 360){
+    const N = nightMinutes(ref), sun = sunsetMinutes(ref);
+    const c = ((Math.round(sun + (p.a==='S' ? m : N + m)) % 1440) + 1440) % 1440;
+    return `ca. ${pad2(Math.floor(c/60))}:${pad2(c%60)}`;
+  }
   const anchor = p.a==='S' ? 'zonsondergang' : 'zonsopkomst';
   if(m===0) return anchor;
   const abs = Math.abs(m);
   const txt = abs<60 ? `${abs} min` : (abs%60===0 ? `${abs/60} uur` : `${Math.floor(abs/60)} uur ${abs%60} min`);
   return `${txt} ${m<0?'voor':'na'} ${anchor}`;
+}
+// Weergave van een tijdstiptekst zonder ruis: "vanaf 0 min na zonsondergang tot 0 min voor zonsopkomst" → "vanaf zonsondergang tot zonsopkomst"
+function prettyTijd(t){
+  return String(t||'').replace(/\b0\s*(?:min(?:uten|uut)?|uur)\s+(?:na|voor)\s+(?=zonsondergang|zonsopkomst)/gi, '').replace(/\s+/g,' ').trim();
+}
+// Hoe de planner een tijdstip leest, in woorden (voor stap 3, zodat het gelijk is aan het veldbezoekplan)
+function slotUitleg(sl){
+  if(!sl) return 'niet herkend: de planner kan dit tijdstip niet combineren';
+  const vk = (a,b) => `${fmtPoint(a)} – ${fmtPoint(b)}`;
+  if(sl.alt && sl.opties) return sl.alt.map((o,k)=>`optie ${k+1}: ${vk(o.s,o.e)}`).join(' of ');
+  if(sl.alt) return `avond ${vk(sl.alt[0].s, sl.alt[0].e)} of ochtend ${vk(sl.alt[1].s, sl.alt[1].e)}`;
+  return (sl.rough ? 'grof: ' : '') + vk(sl.s, sl.e);
 }
 function fmtHours(min){
   const h = Math.round(min/6)/10;
@@ -1892,7 +1943,8 @@ function splitZinnen(txt){
   return out;
 }
 function weerVan(f){
-  return splitZinnen(f.voorwaarden).filter(z=>WEER_RE.test(z) && !/^geen\b.*voorwaarden genoemd/i.test(z)).join(' ');
+  // zinnen die al met "Weer:" beginnen niet nogmaals labelen (anders "Weer: Weer: …")
+  return splitZinnen(f.voorwaarden).filter(z=>WEER_RE.test(z) && !/^geen\b.*voorwaarden genoemd/i.test(z)).map(z=>z.replace(/^weer\s*:\s*/i,'')).join(' ');
 }
 
 // ---------- Veldbezoekplan (combinaties) ----------
@@ -2067,6 +2119,7 @@ function speciesWarnings(sp, selIds){
 function spreidingIndicatief(f, w){
   const M = f.bezoeken||1;
   if((f.tussen||0)>0 || M<2 || !w) return 0;
+  if(f.schema && f.schema.some((e,k)=>schemaGap(f,k))) return 0;   // een bezoekschema met dagen bepaalt de spreiding
   const days = dayDiff(w.ideal.start, w.ideal.end) + 1;
   const ind = Math.max(1, Math.min(30, Math.floor(days/(M+1))));
   return f.tussenMax ? Math.min(ind, Math.max(1, f.tussenMax-7)) : ind;
@@ -2384,7 +2437,9 @@ function planGroup(items, o){
 function planBlockHtml(plan, maxLenMin, nrOffset){
   const {rounds, nodes} = plan;
   const fnm = m => `${escapeHtml(m.soort.naam)} — ${escapeHtml(m.f.naam)}`;
-  const nm = m => `${fnm(m)}${(m.f.bezoeken||1)>1 ? ` (bezoek ${m.ord||m.idx+1}/${m.f.bezoeken}${rolVan(m.f,(m.ord||m.idx+1)-1)?' · '+escapeHtml(rolVan(m.f,(m.ord||m.idx+1)-1)):''})` : ''}`;
+  // bezoeknummer: hetzelfde als bij "Bezoeken en voortgang" (stap 3); bij een bezoekschema de volgorde in het schema
+  const nrv = m => (m.f.schema && m.f.schema.length) ? (m.ord||m.idx+1) : m.idx+1;
+  const nm = m => `${fnm(m)}${(m.f.bezoeken||1)>1 ? ` (bezoek ${nrv(m)}/${m.f.bezoeken}${rolVan(m.f,nrv(m)-1)?' · '+escapeHtml(rolVan(m.f,nrv(m)-1)):''})` : ''}`;
   const short = s => s.replace(/^(Gewone|Ruige|Rosse|Grote|Kleine|Levendbarende) /,'');
   rounds.forEach((r,k)=>{ r.nr = nrOffset + k + 1; r.idx.forEach(i=>{ nodes[i].m.ord = nodes[i].ord; }); });
   const dShort = d => d.toLocaleDateString('nl-NL', {day:'numeric', month:'short'});
@@ -2425,19 +2480,20 @@ function planBlockHtml(plan, maxLenMin, nrOffset){
     });
 
     // tijd
-    const te = timeEval(members, fromN(Math.round((r.es+r.lf)/2)), Infinity) || {time:null, unknown:members};
+    const refD = fromN(Math.round((r.es+r.lf)/2));
+    const te = timeEval(members, refD, Infinity) || {time:null, unknown:members};
     let timeTxt = 'tijdstip niet herkend';
     if(te.time){
       const t = te.time;
       if(t.items.length>1){
-        timeTxt = `${fmtPoint(t.startP)} – ${fmtPoint(t.endP)} (ca. ${fmtHours(t.L)})`;
+        timeTxt = `${fmtPoint(t.startP, refD)} – ${fmtPoint(t.endP, refD)} (ca. ${fmtHours(t.L)})`;
         toel.push(`Tijd: afzonderlijk vraagt elke functie ${t.items.map(i=>fmtHours(i.d)).join(' + ')} binnen het eigen tijdvenster; gecombineerd ca. ${fmtHours(t.L)}.`);
       } else {
         const it = t.items[0], sl = it.m.slot;
-        if(sl.rough || it.d<=0 || it.len<=0) timeTxt = escapeHtml((it.m.slot && it.m.f.tijdstip) || 'zie bron');
-        else if(sl.altOf && sl.altOf.opties) timeTxt = sl.altOf.alt.map((o,k)=>`optie ${k+1}: ${fmtPoint(o.s)} – ${fmtPoint(o.e)}`).join(' of ');
-        else if(sl.altOf) timeTxt = `avond ${fmtPoint(sl.altOf.alt[0].s)} – ${fmtPoint(sl.altOf.alt[0].e)} of ochtend ${fmtPoint(sl.altOf.alt[1].s)} – ${fmtPoint(sl.altOf.alt[1].e)} (ca. ${fmtHours(it.d)})`;
-        else timeTxt = it.len>it.d+1 ? `ca. ${fmtHours(it.d)}, tussen ${fmtPoint(sl.s)} en ${fmtPoint(sl.e)}` : `${fmtPoint(sl.s)} – ${fmtPoint(sl.e)} (ca. ${fmtHours(it.d)})`;
+        if(sl.rough || it.d<=0 || it.len<=0) timeTxt = escapeHtml(prettyTijd((it.m.slot && it.m.f.tijdstip) || 'zie bron'));
+        else if(sl.altOf && sl.altOf.opties) timeTxt = sl.altOf.alt.map((o,k)=>`optie ${k+1}: ${fmtPoint(o.s, refD)} – ${fmtPoint(o.e, refD)}`).join(' of ');
+        else if(sl.altOf) timeTxt = `avond ${fmtPoint(sl.altOf.alt[0].s, refD)} – ${fmtPoint(sl.altOf.alt[0].e, refD)} of ochtend ${fmtPoint(sl.altOf.alt[1].s, refD)} – ${fmtPoint(sl.altOf.alt[1].e, refD)} (ca. ${fmtHours(it.d)})`;
+        else timeTxt = it.len>it.d+1 ? `ca. ${fmtHours(it.d)}, tussen ${fmtPoint(sl.s, refD)} en ${fmtPoint(sl.e, refD)}` : `${fmtPoint(sl.s, refD)} – ${fmtPoint(sl.e, refD)} (ca. ${fmtHours(it.d)})`;
       }
       const assumed = t.items.filter(i=>i.assumed);
       if(assumed.length) toel.push(`Duur per bezoek niet bekend voor ${assumed.map(i=>fnm(i.m)).join(', ')}; gerekend met maximaal 2 uur.`);
@@ -2466,7 +2522,7 @@ function planBlockHtml(plan, maxLenMin, nrOffset){
     const weerLines = (wm.size===1 && (!multi || [...wm.values()][0].length===members.length)) ? [escapeHtml([...wm.keys()][0])]
       : [...wm.entries()].map(([w, ls])=>`<em>${escapeHtml(ls.join(', '))}:</em> ${escapeHtml(w)}`);
 
-    const tag = m => { const t = []; if((m.f.bezoeken||1)>1) t.push(`bezoek ${m.ord||m.idx+1}/${m.f.bezoeken}`); const rl = rolVan(m.f, (m.ord||m.idx+1)-1); if(rl) t.push(escapeHtml(rl)); if(hasDeelbezoek(m.f) && m.kind==='pinned') t.push('vast moment'); if(m.los) t.push('los gepland'); if(m.rec && m.rec.status==='gepland') t.push('gepland'+(m.rec.datum?' '+fmtISO(m.rec.datum):'')); return t.length ? ` <span class="vb-tag">(${t.join(' · ')})</span>` : ''; };
+    const tag = m => { const t = []; if((m.f.bezoeken||1)>1) t.push(`bezoek ${nrv(m)}/${m.f.bezoeken}`); const rl = rolVan(m.f, nrv(m)-1); if(rl) t.push(escapeHtml(rl)); if(hasDeelbezoek(m.f) && m.kind==='pinned') t.push('vast moment'); if(m.los) t.push('los gepland'); if(m.rec && m.rec.status==='gepland') t.push('gepland'+(m.rec.datum?' '+fmtISO(m.rec.datum):'')); return t.length ? ` <span class="vb-tag">(${t.join(' · ')})</span>` : ''; };
     const cls = warns.length ? 'marginal' : (multi ? 'open' : 'upcoming');
     const kern = [`<span class="kv"><b>Tijd:</b> ${timeTxt}</span>`, `<span class="kv"><b>Personen:</b> min. ${P}</span>`].concat(depParts.length ? [`<span class="kv"><b>Volgorde:</b> ${depParts.join('; ')}</span>`] : []);
     return `
@@ -3169,7 +3225,7 @@ var VRIJSTELLING = (function(){
   ['Aardmuis','Bosmuis','Dwergmuis','Dwergspitsmuis','Gewone bosspitsmuis','Huisspitsmuis','Ree','Rosse woelmuis','Veldmuis','Vos','Woelrat','Bruine kikker','Gewone pad','Kleine watersalamander','Meerkikker','Middelste groene kikker','Bastaardkikker'].forEach(function(n){ t[n] = nietIn([]); });
   return t;
 })();
-function provNaam(c){ if(!PROVINCIES) return ''; var p = PROVINCIES.find(function(x){ return x[0]===c; }); return p ? p[1] : ''; }
+function provNaam(c){ if(!PROVINCIES) return c; var p = PROVINCIES.find(function(x){ return x[0]===c; }); return p ? p[1] : c; }
 function provIn(c){ return c==='LVVN' ? 'bij rijksprojecten (Ministerie van LVVN)' : 'in '+provNaam(c); }
 function vrijDelen(sp){
   if(/kleine marterachtigen/i.test(sp.naam||'')) return ['Bunzing','Hermelijn','Wezel'];

@@ -409,6 +409,19 @@ export const cases = [
     })
   },
 
+  {
+    type: 'unit', regel: 11, naam: 'Weergave: zonsondergang van de volgende dag niet als "24 uur na zonsondergang"',
+    verwacht: '"zonsopkomst – zonsondergang" voor het venster overdag',
+    arg: {}, run: () => { const sl = slotFromText('vanaf zonsopkomst tot zonsondergang', 0); return `${fmtPoint(sl.s)} – ${fmtPoint(sl.e)}`; },
+    check: v => v === 'zonsopkomst – zonsondergang' ? [] : [`app toont "${v}"`]
+  },
+  {
+    type: 'unit', regel: 11, naam: 'Weergave: "0 min na zonsondergang" wordt "zonsondergang"',
+    verwacht: '"vanaf zonsondergang tot zonsopkomst"',
+    arg: {}, run: () => prettyTijd('vanaf 0 min na zonsondergang tot 0 uur voor zonsopkomst'),
+    check: v => v === 'vanaf zonsondergang tot zonsopkomst' ? [] : [`app toont "${v}"`]
+  },
+
   // ======================= Regel 7: alternatieven =======================
   {
     type: 'plan', regel: 7, naam: 'Beide gierzwaluw-alternatieven (Omvang plangebied) geselecteerd → melding alternatieven',
