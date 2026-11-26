@@ -1,0 +1,408 @@
+{
+ "versie": "2026-11-26",
+ "beschrijving": "Tijdstip-keuzes uit sheet \"Veldwerkplanner – keuze tijdstippen\" (bibliotheek v72). Vereist planner met tijdstip-opties en schema-tijdstip (PR #2).",
+ "perFunctie": [
+  {
+   "id": "sp-beekdonderpad--jaarrond-habitat-voortplantingsbiotoop-zaklamp",
+   "wijzig": {
+    "tijdstip": "vanaf zonsondergang tot zonsopkomst"
+   }
+  },
+  {
+   "id": "sp-grote-modderkruiper--methode-zichtwaarneming-met-zaklamp",
+   "wijzig": {
+    "tijdstip": "vanaf zonsondergang tot zonsopkomst"
+   }
+  },
+  {
+   "id": "sp-heikikker--voortplantingsbiotoop-koorroep-en-eiklompen",
+   "wijzig": {
+    "tijdstip": "optie 1: vanaf zonsopkomst tot zonsondergang; optie 2: vanaf zonsondergang tot 4 uur na zonsondergang"
+   }
+  },
+  {
+   "id": "sp-heikikker--zomerbiotoop-juvenielen-en-adulten-opsporen",
+   "wijzig": {
+    "tijdstip": "optie 1: vanaf zonsopkomst tot zonsondergang; optie 2: vanaf zonsondergang tot 4 uur na zonsondergang"
+   }
+  },
+  {
+   "id": "sp-heikikker--kooractiviteit-roepende-koren-voortplantingsbiot",
+   "wijzig": {
+    "tijdstip": "vanaf zonsondergang tot zonsopkomst"
+   }
+  },
+  {
+   "id": "sp-kerkuil--waarnemingen-van-paartjes-en-territoriumkarterin",
+   "wijzig": {
+    "tijdstip": "vanaf zonsondergang tot zonsopkomst"
+   }
+  },
+  {
+   "id": "sp-laatvlieger--telemetrie-kraamkolonie-netwerk-in-kaart-brengen",
+   "wijzig": {
+    "tijdstip": "vanaf zonsopkomst tot zonsondergang",
+    "bezoeken": 6,
+    "tussen": 1,
+    "schema": [
+     {
+      "rol": "vangen en zenderen",
+      "tijdstip": "vanaf zonsondergang tot 4 uur na zonsondergang"
+     },
+     {
+      "rol": "uitpeilen 1",
+      "min": 1,
+      "max": 1,
+      "tijdstip": "vanaf zonsopkomst tot zonsondergang"
+     },
+     {
+      "rol": "uitpeilen 2",
+      "min": 1,
+      "max": 1,
+      "tijdstip": "vanaf zonsopkomst tot zonsondergang"
+     },
+     {
+      "rol": "uitpeilen 3",
+      "min": 1,
+      "max": 1,
+      "tijdstip": "vanaf zonsopkomst tot zonsondergang"
+     },
+     {
+      "rol": "uitpeilen 4",
+      "min": 1,
+      "max": 1,
+      "tijdstip": "vanaf zonsopkomst tot zonsondergang"
+     },
+     {
+      "rol": "uitpeilen 5",
+      "min": 1,
+      "max": 1,
+      "tijdstip": "vanaf zonsopkomst tot zonsondergang"
+     }
+    ]
+   },
+   "voorwaardenToevoegen": "Bezoekschema: bezoek 1 's avonds vangen en zenderen, daarna 5 dagen dagelijks overdag uitpeilen (bezoek 2 t/m 6)."
+  },
+  {
+   "id": "sp-laatvlieger--telemetrie-winterverblijfplaatsen-lokaliseren",
+   "wijzig": {
+    "tijdstip": "vanaf zonsopkomst tot zonsondergang",
+    "bezoeken": 6,
+    "tussen": 1,
+    "schema": [
+     {
+      "rol": "vangen en zenderen",
+      "tijdstip": "vanaf zonsondergang tot 4 uur na zonsondergang"
+     },
+     {
+      "rol": "uitpeilen 1",
+      "min": 1,
+      "max": 1,
+      "tijdstip": "vanaf zonsopkomst tot zonsondergang"
+     },
+     {
+      "rol": "uitpeilen 2",
+      "min": 1,
+      "max": 1,
+      "tijdstip": "vanaf zonsopkomst tot zonsondergang"
+     },
+     {
+      "rol": "uitpeilen 3",
+      "min": 1,
+      "max": 1,
+      "tijdstip": "vanaf zonsopkomst tot zonsondergang"
+     },
+     {
+      "rol": "uitpeilen 4",
+      "min": 1,
+      "max": 1,
+      "tijdstip": "vanaf zonsopkomst tot zonsondergang"
+     },
+     {
+      "rol": "uitpeilen 5",
+      "min": 1,
+      "max": 1,
+      "tijdstip": "vanaf zonsopkomst tot zonsondergang"
+     }
+    ]
+   },
+   "voorwaardenToevoegen": "Bezoekschema: bezoek 1 's avonds vangen en zenderen, daarna 5 dagen dagelijks overdag uitpeilen (bezoek 2 t/m 6)."
+  },
+  {
+   "id": "sp-noordse-woelmuis--inloopvallen-live-traps",
+   "wijzig": {
+    "tijdstip": "vanaf zonsopkomst tot zonsondergang",
+    "schema": [
+     {
+      "rol": "vallen plaatsen (nog niet op scherp)",
+      "tijdstip": "vanaf zonsopkomst tot zonsondergang"
+     },
+     {
+      "rol": "vallen op scherp zetten (avond)",
+      "min": 2,
+      "max": 4,
+      "tijdstip": "vanaf zonsondergang tot 4 uur na zonsondergang"
+     },
+     {
+      "rol": "controle 1 (ochtend)",
+      "min": 1,
+      "max": 1,
+      "tijdstip": "vanaf zonsopkomst tot 4 uur na zonsopkomst"
+     },
+     {
+      "rol": "controle 2 (avond)",
+      "min": 0,
+      "max": 0,
+      "tijdstip": "vanaf zonsondergang tot 4 uur na zonsondergang"
+     },
+     {
+      "rol": "controle 3 (ochtend)",
+      "min": 1,
+      "max": 1,
+      "tijdstip": "vanaf zonsopkomst tot 4 uur na zonsopkomst"
+     },
+     {
+      "rol": "controle 4 (avond) + vallen ophalen",
+      "min": 0,
+      "max": 0,
+      "tijdstip": "vanaf zonsondergang tot 4 uur na zonsondergang"
+     }
+    ]
+   }
+  },
+  {
+   "id": "sp-poelkikker--voortplantingsbiotoop",
+   "wijzig": {
+    "tijdstip": "vanaf 12:00 tot zonsondergang"
+   }
+  },
+  {
+   "id": "sp-ringslang--voortplantingsbiotoop-zonnende-vrouwtjes",
+   "wijzig": {
+    "tijdstip": "vanaf zonsopkomst tot 4 uur na zonsopkomst"
+   }
+  },
+  {
+   "id": "sp-ringslang--zomerbiotoop",
+   "wijzig": {
+    "tijdstip": "vanaf zonsopkomst tot 4 uur na zonsopkomst"
+   }
+  },
+  {
+   "id": "sp-rugstreeppad--kooractiviteit-voortplantingswateren",
+   "wijzig": {
+    "tijdstip": "vanaf zonsondergang tot zonsopkomst",
+    "deelbezoekTijdstip": {
+     "'s avonds en 's nachts": "vanaf zonsondergang tot zonsopkomst"
+    }
+   }
+  },
+  {
+   "id": "sp-ruige-dwergvleermuis--aanvullend-onderzoek-kraamverblijfplaatsen",
+   "wijzig": {
+    "tijdstip": "vanaf 2 uur voor zonsopkomst tot zonsopkomst"
+   }
+  },
+  {
+   "id": "sp-steenuil--nestindicatieve-waarnemingen",
+   "wijzig": {
+    "tijdstip": "optie 1: vanaf zonsondergang tot 4 uur na zonsondergang; optie 2: vanaf 2 uur voor zonsopkomst tot zonsopkomst"
+   }
+  },
+  {
+   "id": "sp-meervleermuis--telemetrie",
+   "wijzig": {
+    "tijdstip": "vanaf zonsondergang tot zonsopkomst"
+   }
+  },
+  {
+   "id": "sp-waterspitsmuis--inloopvallen",
+   "wijzig": {
+    "tijdstip": "vanaf zonsopkomst tot zonsondergang",
+    "schema": [
+     {
+      "rol": "vallen plaatsen (pre-baiten, niet op scherp)",
+      "tijdstip": "vanaf zonsopkomst tot zonsondergang"
+     },
+     {
+      "rol": "vallen op scherp zetten",
+      "min": 3,
+      "tijdstip": "vanaf zonsopkomst tot zonsondergang"
+     },
+     {
+      "rol": "controle 1 (nacht)",
+      "min": 0,
+      "max": 0,
+      "tijdstip": "vanaf zonsondergang tot middernacht"
+     },
+     {
+      "rol": "controle 2 (ochtend)",
+      "min": 1,
+      "max": 1,
+      "tijdstip": "vanaf zonsopkomst tot 4 uur na zonsopkomst"
+     },
+     {
+      "rol": "controle 3 (middag)",
+      "min": 0,
+      "max": 0,
+      "tijdstip": "vanaf 12:00 tot 17:00"
+     },
+     {
+      "rol": "controle 4 (nacht)",
+      "min": 0,
+      "max": 0,
+      "tijdstip": "vanaf zonsondergang tot middernacht"
+     },
+     {
+      "rol": "controle 5 (ochtend)",
+      "min": 1,
+      "max": 1,
+      "tijdstip": "vanaf zonsopkomst tot 4 uur na zonsopkomst"
+     },
+     {
+      "rol": "controle 6 (middag)",
+      "min": 0,
+      "max": 0,
+      "tijdstip": "vanaf 12:00 tot 17:00"
+     },
+     {
+      "rol": "controle 7 (nacht)",
+      "min": 0,
+      "max": 0,
+      "tijdstip": "vanaf zonsondergang tot middernacht"
+     },
+     {
+      "rol": "controle 8 (ochtend) + vallen ophalen",
+      "min": 1,
+      "max": 1,
+      "tijdstip": "vanaf zonsopkomst tot 4 uur na zonsopkomst"
+     }
+    ]
+   },
+   "voorwaardenToevoegen": "Bezoekschema: dag 1 plaatsen, op z'n vroegst dag 4 op scherp zetten (overdag) en dezelfde nacht controle 1; daarna dag 5 en 6 telkens 's ochtends, 's middags en 's nachts, dag 7 's ochtends laatste controle + vallen ophalen."
+  },
+  {
+   "id": "sp-knoflookpad--roepende-dieren",
+   "wijzig": {
+    "tijdstip": "vanaf 2 uur na zonsondergang tot 4 uur na zonsondergang"
+   }
+  },
+  {
+   "id": "sp-knoflookpad--juvenielen",
+   "wijzig": {
+    "tijdstip": "optie 1: vanaf zonsopkomst tot zonsondergang; optie 2: vanaf zonsondergang tot 4 uur na zonsondergang"
+   }
+  },
+  {
+   "id": "sp-gladde-slang--routetelling",
+   "wijzig": {
+    "tijdstip": "optie 1: vanaf zonsopkomst tot 2 uur na zonsopkomst; optie 2: vanaf 2 uur voor zonsondergang tot zonsondergang"
+   }
+  },
+  {
+   "id": "sp-adder--routetelling",
+   "wijzig": {
+    "tijdstip": "optie 1: vanaf zonsopkomst tot 11:00; optie 2: vanaf 17:00 tot zonsondergang"
+   },
+   "voorwaardenToevoegen": "Routetellingen bij gunstig weer; in de zomermaanden vóór 11:00 of na 17:00 uur. Buiten de zomer kan de hele dag; de planner rekent het hele seizoen met de zomervensters (aan de veilige kant)."
+  },
+  {
+   "id": "sp-ondergrondse-woelmuis--inloopvallen",
+   "wijzig": {
+    "naam": "Braakbalonderzoek (indicatief)",
+    "tijdstip": "vanaf zonsopkomst tot zonsondergang",
+    "voorwaarden": "Methode: braakbalonderzoek (braakballen van uilen, vooral kerkuil, verzamelen en pluizen). Er is op dit moment geen geldend onderzoeksprotocol voor deze soort; deze functie is indicatief en de inspanning moet ecologisch worden onderbouwd. Braakbalonderzoek is gekozen boven inloopvallen: de soort is moeilijk te vangen met inloopvallen en verreweg de meeste verspreidingsgegevens komen uit braakbalonderzoek (Zoogdiervereniging). Let op: uilen jagen ook buiten het plangebied, dus braakballen tonen aanwezigheid in de omgeving, niet de exacte locatie; voor uitspraken over afwezigheid hanteert de Zoogdiervereniging een monster van minimaal 150 prooien. Alleen relevant waar de soort niet is vrijgesteld. Geen bronperiode beschikbaar: de periode staat daarom op jaarrond."
+   }
+  },
+  {
+   "id": "sp-tweekleurige-bosspitsmuis--inloopvallen",
+   "wijzig": {
+    "naam": "Braakbalonderzoek (indicatief)",
+    "tijdstip": "vanaf zonsopkomst tot zonsondergang",
+    "voorwaarden": "Methode: braakbalonderzoek (braakballen van uilen, vooral kerkuil, verzamelen en pluizen). Er is op dit moment geen geldend onderzoeksprotocol voor deze soort; deze functie is indicatief en de inspanning moet ecologisch worden onderbouwd. Braakbalonderzoek is gekozen boven inloopvallen: de soort is moeilijk te vangen met inloopvallen en verreweg de meeste verspreidingsgegevens komen uit braakbalonderzoek (Zoogdiervereniging). Let op: uilen jagen ook buiten het plangebied, dus braakballen tonen aanwezigheid in de omgeving, niet de exacte locatie; voor uitspraken over afwezigheid hanteert de Zoogdiervereniging een monster van minimaal 150 prooien. Alleen relevant waar de soort niet is vrijgesteld. Geen bronperiode beschikbaar: de periode staat daarom op jaarrond."
+   }
+  },
+  {
+   "id": "sp-molmuis--inloopvallen",
+   "wijzig": {
+    "naam": "Braakbalonderzoek (indicatief)",
+    "tijdstip": "vanaf zonsopkomst tot zonsondergang",
+    "voorwaarden": "Methode: braakbalonderzoek (braakballen van uilen, vooral kerkuil, verzamelen en pluizen). Er is op dit moment geen geldend onderzoeksprotocol voor deze soort; deze functie is indicatief en de inspanning moet ecologisch worden onderbouwd. Braakbalonderzoek is gekozen boven inloopvallen: de soort is moeilijk te vangen met inloopvallen en verreweg de meeste verspreidingsgegevens komen uit braakbalonderzoek (Zoogdiervereniging). Let op: uilen jagen ook buiten het plangebied, dus braakballen tonen aanwezigheid in de omgeving, niet de exacte locatie; voor uitspraken over afwezigheid hanteert de Zoogdiervereniging een monster van minimaal 150 prooien. Alleen relevant waar de soort niet is vrijgesteld. Geen bronperiode beschikbaar: de periode staat daarom op jaarrond."
+   }
+  }
+ ],
+ "perFormulering": [
+  {
+   "tijdstipIs": "overdag",
+   "wordt": "vanaf zonsopkomst tot zonsondergang"
+  },
+  {
+   "tijdstipIs": "overdag (inspectie van de ruimte)",
+   "wordt": "vanaf zonsopkomst tot zonsondergang"
+  },
+  {
+   "tijdstipIs": "overdag (ochtend of namiddag)",
+   "wordt": "optie 1: vanaf zonsopkomst tot 4 uur na zonsopkomst; optie 2: vanaf 15:00 tot 18:00"
+  },
+  {
+   "tijdstipIs": "overdag (fuiken plaatsen en controleren)",
+   "wordt": "vanaf zonsopkomst tot zonsondergang"
+  },
+  {
+   "tijdstipIs": "overdag (camera registreert permanent)",
+   "wordt": "vanaf zonsopkomst tot zonsondergang"
+  },
+  {
+   "tijdstipIs": "overdag, doch niet in de vroege ochtend",
+   "wordt": "vanaf 2 uur na zonsopkomst tot zonsondergang"
+  },
+  {
+   "tijdstipIs": "gehele nacht",
+   "wordt": "vanaf zonsondergang tot zonsopkomst"
+  },
+  {
+   "tijdstipIs": "overdag (logger plaatsen en ophalen)",
+   "wordt": "vanaf zonsopkomst tot zonsondergang"
+  },
+  {
+   "tijdstipIs": "'s avonds",
+   "wordt": "vanaf zonsondergang tot 4 uur na zonsondergang"
+  },
+  {
+   "tijdstipIs": "overdag, na zonsopkomst",
+   "wordt": "vanaf zonsopkomst tot zonsondergang"
+  },
+  {
+   "tijdstipIs": "'s nachts, met een sterke zaklamp",
+   "wordt": "vanaf zonsondergang tot zonsopkomst"
+  },
+  {
+   "tijdstipIs": "overdag (tijdens daglicht)",
+   "wordt": "vanaf zonsopkomst tot zonsondergang"
+  },
+  {
+   "tijdstipIs": "overdag, op geschikte dagen en in potentieel geschikt habitat",
+   "wordt": "vanaf zonsopkomst tot zonsondergang"
+  },
+  {
+   "tijdstipIs": "overdag, tijdens goede weersomstandigheden",
+   "wordt": "vanaf zonsopkomst tot zonsondergang"
+  },
+  {
+   "tijdstipIs": "'s avonds, met zaklamp",
+   "wordt": "vanaf zonsondergang tot 4 uur na zonsondergang"
+  },
+  {
+   "tijdstipIs": "overdag (inspectie met endoscoop of boomcamera)",
+   "wordt": "vanaf zonsopkomst tot zonsondergang"
+  },
+  {
+   "tijdstipIs": "overdag (detectors plaatsen en ophalen)",
+   "wordt": "vanaf zonsopkomst tot zonsondergang"
+  },
+  {
+   "tijdstipIs": "overdag bij zon",
+   "wordt": "vanaf zonsopkomst tot zonsondergang"
+  }
+ ]
+}

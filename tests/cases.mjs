@@ -346,6 +346,69 @@ export const cases = [
       r => r.rounds.filter(x => x.members.some(m => m.fid === L.gzKlein) && x.members.some(m => m.fid !== L.gzKlein)).map(() => ({ regel: 3, msg: 'gierzwaluw gecombineerd met andere groep terwijl dat uit staat' })))
   },
 
+  // ======================= Regel 10 (26-11-2026): tijdstip-opties en tijdstip per bezoek in een schema =======================
+  compatCase('Tijdstip-opties: "optie 1: overdag; optie 2: avond" past bij een avond- én bij een dagfunctie, niet bij 0:00–2:00 in december', 10,
+    [{ tijdstip: 'optie 1: vanaf zonsopkomst tot zonsondergang; optie 2: vanaf zonsondergang tot 4 uur na zonsondergang', duur: 0 },
+     { tijdstip: 'vanaf zonsondergang tot 2 uur na zonsondergang', duur: 0 }, { tijdstip: '10:00 tot 17:00', duur: 0 },
+     { tijdstip: '0:00 - 2:00 uur', duur: 2 }],
+    [[0, 1], [0, 2], [0, 3]], [true, true, false], '2027-12-15', 'elk bezoek mag de optie kiezen die past; in december ligt 0:00–2:00 te ver na de avondoptie (tot ca. 20:20)'),
+  {
+    type: 'plan', regel: 10, naam: 'Tijdstip-opties per bezoek: A (2×, overdag óf avond) + B (avond) + C (overdag) → 2 veldbezoeken',
+    verwacht: '2 veldbezoeken: één bezoek van A samen met B (avond), het andere samen met C (overdag)',
+    scenario: scen({ fns: [F('A', { bezoeken: 2, tussen: 10, duur: 1, tijdstip: 'optie 1: vanaf zonsopkomst tot zonsondergang; optie 2: vanaf zonsondergang tot 4 uur na zonsondergang' }),
+      F('B', { duur: 1, tijdstip: 'vanaf zonsondergang tot 2 uur na zonsondergang' }), F('C', { duur: 1, tijdstip: '10:00 tot 17:00' })] }),
+    check: all(count(2, 'A kiest per bezoek een andere optie'),
+      r => r.rounds.some(x => x.members.some(m => m.fid === 't-B') && x.members.some(m => m.fid === 't-C')) ? [{ regel: 10, msg: 'B (avond) en C (overdag) in één veldbezoek' }] : [])
+  },
+  {
+    type: 'plan', regel: 10, naam: 'Schema met tijdstip per bezoek: A1 overdag, A2 avond (1 dag later) + B overdag + C avond → 2 veldbezoeken',
+    verwacht: '2 veldbezoeken: A bezoek 1 met B (overdag), A bezoek 2 met C (avond)',
+    scenario: scen({ fns: [F('A', { bezoeken: 2, tussen: 1, duur: 1, tijdstip: 'vanaf zonsopkomst tot zonsondergang',
+        schema: [{ rol: 'plaatsen', tijdstip: 'vanaf zonsopkomst tot zonsondergang' }, { rol: 'controle', min: 1, max: 1, tijdstip: 'vanaf zonsondergang tot 4 uur na zonsondergang' }] }),
+      F('B', { duur: 1, tijdstip: '10:00 tot 17:00' }), F('C', { duur: 1, tijdstip: 'vanaf zonsondergang tot 2 uur na zonsondergang' })] }),
+    check: all(count(2, 'elk schemabezoek combineert met de functie van zijn eigen dagdeel'), r => {
+      const fout = [];
+      const rB = r.rounds.find(x => x.members.some(m => m.fid === 't-B')), rC = r.rounds.find(x => x.members.some(m => m.fid === 't-C'));
+      if (!rB || !rB.members.some(m => m.fid === 't-A' && m.idx === 0)) fout.push({ regel: 10, msg: 'A bezoek 1 (overdag) zit niet bij B' });
+      if (!rC || !rC.members.some(m => m.fid === 't-A' && m.idx === 1)) fout.push({ regel: 10, msg: 'A bezoek 2 (avond) zit niet bij C' });
+      return fout;
+    })
+  },
+  {
+    type: 'plan', regel: 10, naam: 'Noordse woelmuis inloopvallen: 6 bezoeken volgens schema (2–4 dagen gewenning, controles op 2 dagen)',
+    verwacht: '6 veldbezoeken; scherp zetten 2–4 dagen na plaatsen; controles 1 en 2 op dezelfde dag, 3 en 4 de dag erna',
+    scenario: scen({ today: '2027-01-15', lib: ['sp-noordse-woelmuis--inloopvallen-live-traps'] }),
+    check: all(count(6, '6 schemabezoeken, niet onderling te combineren'), (r, H) => {
+      const v = of(r, 'sp-noordse-woelmuis--inloopvallen-live-traps').map(x => x.es);
+      if (v.length !== 6) return [];
+      const g = (i) => H.days(v[i - 1], v[i]), fout = [];
+      if (g(1) < 2 || g(1) > 4) fout.push({ regel: 10, msg: `scherp zetten ${g(1)} dagen na plaatsen (verwacht 2–4)` });
+      [[2, 1], [3, 0], [4, 1], [5, 0]].forEach(([i, d]) => { if (g(i) !== d) fout.push({ regel: 10, msg: `bezoek ${i + 1}: ${g(i)} dagen na het vorige (verwacht ${d})` }); });
+      return fout;
+    })
+  },
+
+  {
+    type: 'plan', regel: 10, naam: 'Waterspitsmuis inloopvallen: 10 bezoeken volgens schema (op z\'n vroegst dag 4 op scherp, 8 controles in 3 dagen)',
+    verwacht: '10 veldbezoeken; scherp zetten ≥ 3 dagen na plaatsen; daarna 0/1-dagstappen volgens het schema',
+    scenario: scen({ today: '2027-01-15', lib: ['sp-waterspitsmuis--inloopvallen'] }),
+    check: all(count(10, '10 schemabezoeken'), (r, H) => {
+      const v = of(r, 'sp-waterspitsmuis--inloopvallen').map(x => x.es); if (v.length !== 10) return [];
+      const want = [null, '≥3', 0, 1, 0, 0, 1, 0, 0, 1], fout = [];
+      for (let i = 1; i < 10; i++) { const d = H.days(v[i - 1], v[i]); if (want[i] === '≥3' ? d < 3 : d !== want[i]) fout.push({ regel: 10, msg: `bezoek ${i + 1}: ${d} dagen na het vorige (verwacht ${want[i]})` }); }
+      return fout;
+    })
+  },
+  {
+    type: 'plan', regel: 10, naam: 'Laatvlieger telemetrie kraamkolonie: 1 avond vangen + 5 dagen uitpeilen = 6 bezoeken op opeenvolgende dagen',
+    verwacht: '6 veldbezoeken, elk 1 dag na het vorige',
+    scenario: scen({ today: '2027-01-15', lib: ['sp-laatvlieger--telemetrie-kraamkolonie-netwerk-in-kaart-brengen'] }),
+    check: all(count(6, '6 schemabezoeken'), (r, H) => {
+      const v = of(r, 'sp-laatvlieger--telemetrie-kraamkolonie-netwerk-in-kaart-brengen').map(x => x.es); if (v.length !== 6) return [];
+      return v.slice(1).map((x, i) => H.days(v[i], x)).map((d, i) => d === 1 ? null : { regel: 10, msg: `bezoek ${i + 2}: ${d} dagen na het vorige (verwacht 1)` }).filter(Boolean);
+    })
+  },
+
   // ======================= Regel 7: alternatieven =======================
   {
     type: 'plan', regel: 7, naam: 'Beide gierzwaluw-alternatieven (Omvang plangebied) geselecteerd → melding alternatieven',
