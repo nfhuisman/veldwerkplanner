@@ -1695,12 +1695,13 @@ function renderTimeline(){
 // ---------- Tijdstip → tijdslot ----------
 // Punten: {a:'S'|'R'|'C', off} — S = zonsondergang, R = zonsopkomst (offset in minuten), C = klokttijd (minuten na middernacht)
 function classifyTijdstip(text){
+  // het eerstgenoemde dagdeel telt: "overdag (ochtend of namiddag)" is overdag, "'s avonds en 's nachts" is avond
   const t = (text||'').toLowerCase();
-  if(/ochtend|zonsopkomst|dageraad/.test(t)) return 'ochtend';
-  if(/avond|zonsondergang|schemer/.test(t)) return 'avond';
-  if(/nacht|middernacht/.test(t)) return 'nacht';
-  if(/overdag|\bdag\b|middag/.test(t)) return 'dag';
-  return 'onbekend';
+  const kandidaten = [['ochtend', /ochtend|zonsopkomst|zonsopgang|dageraad/], ['avond', /avond|zonsondergang|schemer/],
+    ['nacht', /nacht|middernacht/], ['dag', /overdag|\bdag\b|middag/]];
+  let best = 'onbekend', pos = Infinity;
+  kandidaten.forEach(([k, re]) => { const i = t.search(re); if(i >= 0 && i < pos){ pos = i; best = k; } });
+  return best;
 }
 function nightMinutes(date){
   const doy = Math.floor((date - new Date(date.getFullYear(),0,0))/86400000);
@@ -1733,26 +1734,98 @@ function extractClocks(t){
   while((m = re.exec(t))){ const h = +m[1], mi = +m[2]; if(h<=24 && mi<60) out.push(h*60+mi); }
   return out;
 }
-function slotFromText(raw, dur){
-  const t = (raw||'').toLowerCase().replace(/middernacht/g,'00:00').replace(/\s+/g,' ').trim()
+// Tijdtekst normaliseren: woorden → getallen ("een half uur" → "30 min"), zonsopgang → zonsopkomst,
+// "3 uur en 45 minuten" → "225 min", "9 en 12 uur" → "9:00 en 12:00".
+function normTijd(raw){
+  return (raw||'').toLowerCase().replace(/\s+/g,' ').trim()
+    .replace(/zonsopgang/g,'zonsopkomst')
+    .replace(/\banderhalf\s*uur\b/g,'90 min').replace(/\bdrie kwartier\b/g,'45 min')
+    .replace(/\b(?:een\s+)?half\s*uur\b/g,'30 min').replace(/\b(?:een\s+)?kwartier\b/g,'15 min')
+    .replace(/(\d+(?:[.,]\d+)?)\s*(?:uur|u)\s+en\s+(\d+)\s*(?:minuten|minuut|min)\b/g, (m,h,mi)=>`${Math.round(parseFloat(h.replace(',','.'))*60) + +mi} min`)
     .replace(/\b(\d{1,2})\s*(?:uur|u)?\s*(en|tot|t\/m|-|–)\s*(\d{1,2})\s*(?:uur|u)\b/, (m,a,w,b)=>`${a}:00 ${w} ${b}:00`);
-  if(!t) return null;
-  const clocks = extractClocks(t);
-  if(clocks.length>=2){
-    let e = clocks[1]; if(e <= clocks[0]) e += 1440;
-    return {s:{a:'C',off:clocks[0]}, e:{a:'C',off:e}, dur, rough:false};
+}
+// Splitst alternatieven ("…; …", "… of …") buiten haakjes; de planner gebruikt het eerste alternatief met een tijdpunt.
+function splitAlternatieven(t){
+  const keep = [];
+  const masked = t.replace(/\([^()]*\)|\[[^\]]*\]/g, m=>{ keep.push(m); return `\u0000${keep.length-1}\u0000`; });
+  return masked.split(/\s*;\s*|\s*,?\s+of\s+/).map(s=>s.replace(/\u0000(\d+)\u0000/g,(m,i)=>keep[+i]).trim()).filter(Boolean);
+}
+const heeftTijdpunt = s => /zonsondergang|zonsopkomst|middernacht|\d{1,2}[:.]\d{2}/.test(s);
+// Haakjes weg (bv. "(suboptimaal: …)") als de tekst erbuiten zelf een tijdpunt bevat; anders alleen de haakjes zelf.
+function stripHaakjes(t){
+  const buiten = t.replace(/\([^()]*\)|\[[^\]]*\]/g,' ');
+  return (heeftTijdpunt(buiten) ? buiten : t.replace(/[()\[\]]/g,' ')).replace(/\s+/g,' ').trim();
+}
+function clockOf(s){
+  if(/middernacht/.test(s)) return 1440;
+  const m = s.match(/(\d{1,2})[:.](\d{2})/);
+  return (m && +m[1]<=24 && +m[2]<60) ? +m[1]*60 + +m[2] : null;
+}
+function anyPoint(s){
+  if(!s) return null;
+  const p = parsePoint(s), c = clockOf(s);
+  if(p && c!=null) return s.search(/zonsondergang|zonsopkomst/) < s.search(/middernacht|\d{1,2}[:.]\d{2}/) ? p : {a:'C',off:c};
+  return p || (c!=null ? {a:'C',off:c} : null);
+}
+// "120 minuten daarna" → 120 (duur ten opzichte van het begin)
+function relDuur(s){
+  if(!/\b(daarna|erna|later)\b/.test(s||'')) return null;
+  const m = s.match(/(\d+(?:[.,]\d+)?)\s*(minuten|minuut|min|uren|uur|u)\b/);
+  if(!m) return null;
+  let v = parseFloat(m[1].replace(',','.')); if(!/^min/.test(m[2])) v *= 60;
+  return v;
+}
+function slotFromSegment(t, dur){
+  if(!heeftTijdpunt(t)) return null;
+  let parts;
+  const klok = t.match(/(\d{1,2}[:.]\d{2}|middernacht)\s*(?:-|–|tot|t\/m|en)\s*(\d{1,2}[:.]\d{2}|middernacht)/);
+  const tus = t.match(/\btussen\s+(.+?)\s+en\s+(.+)$/);
+  if(klok) parts = [klok[1], klok[2]];
+  else if(tus && anyPoint(tus[1]) && anyPoint(tus[2])) parts = [tus[1], tus[2]];
+  else parts = t.split(/\s+(?:tot|t\/m|-|–)\s+|(?<=\d)\s*[-–]\s*(?=\d)/);
+  let s = anyPoint(parts[0]), e = null;
+  if(parts.length>1){
+    const rd = relDuur(parts[1]);
+    e = (rd!=null && s) ? {a:s.a, off:s.off+rd} : anyPoint(parts.slice(1).join(' tot '));
+  } else if(s){
+    const rel = t.match(/\b(?:uiterlijk|tot)\b(.*\b(?:daarna|erna|later)\b.*)$/);
+    const rd = rel ? relDuur(rel[1]) : null;
+    if(rd!=null) e = {a:s.a, off:s.off+rd};
+    else {
+      const pre = t.slice(0, t.search(/\d|zonsondergang|zonsopkomst|middernacht/));
+      if(/\b(eindtijd|uiterlijk|einde)\b/.test(pre) && !/\b(vanaf|start|starttijd|begin)\b/.test(pre)){ e = s; s = null; }
+    }
   }
-  if(clocks.length===1){
-    if(/\btot\b|\bvoor\b/.test(t) && !/vanaf|\bna\b/.test(t)) return {s:{a:'C',off:clocks[0]-dur}, e:{a:'C',off:clocks[0]}, dur, rough:false};
-    return {s:{a:'C',off:clocks[0]}, e:{a:'C',off:clocks[0]+dur}, dur, rough:false};
+  if(s && !e && /\brond\b/.test(t)){             // "rond zonsondergang": venster om het tijdpunt heen
+    const half = Math.max(dur, 120)/2;
+    e = {a:s.a, off:s.off+half}; s = {a:s.a, off:s.off-half};
   }
-  const parts = t.split(/\s+(?:tot|t\/m)\s+/);
-  const s = parsePoint(parts[0]);
-  const e = parts.length>1 ? parsePoint(parts[1]) : null;
-  if(s && e) return {s, e, dur, rough:false};
+  if(s && e){
+    if(s.a==='C' && e.a==='C'){
+      let a = s.off, b = e.off; if(b <= a) b += 1440;
+      // dagvenster (begint vóór 12:00 of eindigt uiterlijk 17:00): op de dag ná de avond van de datum, net als 'overdag'
+      if(a < 720 || b <= 1020){ a += 1440; b += 1440; }
+      s = {a:'C', off:a}; e = {a:'C', off:b};
+    } else if(s.a==='R' && e.a==='S'){
+      e = {a:'S', off:e.off+1440};           // zonsopkomst → zonsondergang van dezelfde dag
+    }
+    return {s, e, dur, rough:false};
+  }
   if(s) return {s, e:{a:s.a, off:s.off+dur}, dur, rough:false};
   if(e) return {s:{a:e.a, off:e.off-dur}, e, dur, rough:false};
+  return null;
+}
+function slotFromText(raw, dur){
+  const t = normTijd(raw);
+  if(!t) return null;
+  let leeg = null;
+  for(const seg of splitAlternatieven(t)){
+    const r = slotFromSegment(stripHaakjes(seg), dur);
+    if(r && !(r.s.a===r.e.a && r.e.off<=r.s.off)) return r;
+    if(r && !leeg) leeg = r;                      // venster zonder lengte: liever de grove herkenning
+  }
   const c = classifyTijdstip(t);
+  if(c==='onbekend' && leeg) return leeg;
   if(c==='avond') return {s:{a:'S',off:0}, e:{a:'S',off:240}, dur, rough:true};
   if(c==='ochtend') return {s:{a:'R',off:-180}, e:{a:'R',off:0}, dur, rough:true};
   if(c==='nacht') return {s:{a:'S',off:0}, e:{a:'R',off:0}, dur, rough:true};
