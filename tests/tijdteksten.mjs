@@ -22,6 +22,7 @@ const LIB = JSON.parse(html.match(/<script type="application\/json" id="default-
 const teksten = new Map(); // tekst -> {n, duur:Set, voorbeeld}
 const add = (t, duur, wie) => { const k = t || ''; if (!teksten.has(k)) teksten.set(k, { n: 0, duren: new Set(), voorbeeld: wie }); const x = teksten.get(k); x.n++; x.duren.add(duur || 0); };
 LIB.soorten.forEach(s => s.functies.forEach(f => {
+  if (/--melding$/.test(f.id)) return;   // meldingsfuncties: geen veldbezoek, dus geen tijdstip
   add(f.tijdstip, f.duur, `${s.naam} – ${f.naam}`);
   (f.deelbezoeken || []).forEach(d => { if (d.tijdstip) add(d.tijdstip, f.duur, `${s.naam} – ${f.naam} (deelbezoek)`); });
 }));
